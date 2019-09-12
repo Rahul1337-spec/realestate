@@ -86,27 +86,13 @@
 
                                             <div class="col-md-4 col-sm-12">
                                                 <div class="form-group">
-                                                    <h4 class="combo-label">- Multiple Selection with Checkboxes</h4>
-                                                    <select class="ui fluid search dropdown" multiple="">
-                                                      <option value="">State</option>
-                                                      <option value="AL">Alabama</option>
-                                                      <option value="AK">Alaska</option>
-                                                      <option value="AZ">Arizona</option>
-                                                      <option value="AR">Arkansas</option>
-                                                      <option value="CA">California</option>
-                                                      <option value="CO">Colorado</option>
-                                                      <option value="CT">Connecticut</option>
-                                                      <option value="DE">Delaware</option>
-                                                  </select> 
-                                                  @error('property_asset')
-                                                  <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-sm-12">
+                                                 <label class="form-control-label">Featured Image</label>
+                                                 <input type="file" name="featured" class="form-control"> 
+                                             </div>
+                                         </div>
+                                         <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
+                                                <label class="form-control-label">Property Sample Images</label>
                                                 <div class="input-group control-group increment" >
                                                     <input type="file" name="image[]" class="form-control">
                                                     <div class="input-group-btn"> 
@@ -168,8 +154,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-4">
-                                    <label class="form-control-label">Featured Image</label>
-                                    <input type="file" name="featured" class="form-control">
+
                                 </div> 
                                 <div class="col-md-4 py-3">
                                     <input type="submit" name="submit" value="submit" class="form-control btn btn-danger">
