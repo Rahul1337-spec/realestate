@@ -21,6 +21,7 @@ class Property extends Model
         'property_country',
         'property_state',
         'property_rate',
+        'asset',
         'featured_img',
     ];
     // public function __construct(){
@@ -37,6 +38,9 @@ class Property extends Model
     }
     public function cities(){
         return $this->belongsToMany('App\City');
+    }
+    public function asset(){
+        return $this->belongsToMany('App\Asset');
     }
     public function enquireprop(){
         $this->belongsToMany('App\Enquiry');

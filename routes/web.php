@@ -93,6 +93,18 @@ Route::namespace('admin')->prefix('admin')->middleware(['auth','auth.admin'])->n
         'as' => 'deletecity',
         'uses' => 'CityController@delete'
     ]);
+    Route::get('/assetmanage',[
+        'as' => 'assetmanage',
+        'uses' => 'AssetsController@index'
+    ]);
+    Route::post('/assetadd',[
+        'as' => 'assetadd',
+        'uses' => 'AssetsController@assetadd'
+    ]);
+    Route::get('delete/{id}',[
+        'as' => 'deleteasset',
+        'uses' => 'AssetsController@delete'
+    ]);
 });
 
 

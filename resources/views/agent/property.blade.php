@@ -154,6 +154,20 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-4">
+                                    <label class="form-control-label">Asset</label>
+                                    <select class="form-control @error('asset') is-invalid @enderror" name="asset">
+                                        <option value="2 BHK">2 BHK</option>
+                                        <option value="3 BHK">3 BHK</option>
+                                    </select>
+                                    @error('asset')
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
 
                                 </div> 
                                 <div class="col-md-4 py-3">

@@ -93,6 +93,14 @@
                             </div>
                         </a>
                     </div>
+                    <div class="col-md-4">  
+                        <a href="{{ route('admin.assetmanage') }}">
+                            <div class="card">
+                                <div class="card-header">Manage Assets</div>
+                                <div class="card-body">Manage Property Assets</div>
+                            </div>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

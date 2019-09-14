@@ -16,6 +16,7 @@ use App\Type;
 use App\Property;
 use App\Image;
 use App\City;
+use App\Asset;
 
 class PropertyController extends Controller
 {
@@ -68,6 +69,7 @@ class PropertyController extends Controller
         /*--------------Data Validation before pushing forward--------------*/ 
         if($request->hasFile('image') && $request->hasFile('featured')){
             $data = $request->ToArray();
+
             $valid = Validator::make($data,[
                 'property_name' => ['required','string','max:255'],
                 'property_address' => ['required','string','max:255'],
@@ -77,6 +79,7 @@ class PropertyController extends Controller
                 'country' => ['required'],
                 'state' => ['required'],
                 'type' => ['required'],
+                'asset' => ['required'],
                 'featured' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
             ]);
@@ -84,10 +87,14 @@ class PropertyController extends Controller
             /*---------------If Valid Push forward the data---------------------*/ 
             if($valid){
                 $type = DB::Table('types')->where('name',$request->type)->get();
+                $asset = $request->asset;
                 $state = $request->state;
-                $stateattach = DB::table('cities')->where('name',$state)->get()->ToArray();
 
+                $assetattach = DB::table('assets')->where('name',$asset)->get()->ToArray();
+                $stateattach = DB::table('cities')->where('name',$state)->get()->ToArray();
+                
                 $state_id = $stateattach[0]->id;
+                $asset_id = $assetattach[0]->id;
 
                 foreach($type as $data){
                     $type_id = $data->id;
@@ -127,12 +134,14 @@ class PropertyController extends Controller
                     'property_country' => $request->country,
                     'property_state' => $request->state,
                     'property_rate' => $request->property_rate,
-                    'featured_img' => $name
+                    'asset' => $request->asset,
+                    'featured_img' => $name,
                 ]);
 
                 $postdata->agents()->attach($agent_id);
                 $postdata->type()->attach($type_id);
                 $postdata->cities()->attach($state_id);
+                $postdata->asset()->attach($asset_id);
                 $postdata->save();
 
                 /*------------Finding the Buy and Rent Types to add up for agent---------------*/
