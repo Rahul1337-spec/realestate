@@ -22,12 +22,18 @@ class AgentController extends Controller
 
     public function regpage(){
        $user = Auth::user();
-       $agentdata = DB::table('agent_user')->where('user_id',$user->id)->get();
+       $city = DB::table('cities')->get()->ToArray();
+       if(Auth::user()->iso_code != 'IN'){
+           $agentdata = DB::table('agent_user')->where('user_id',$user->id)->get();
 
-       return view('user.regagent')->with('user',$user)->with('agentdata',$agentdata);
-   }
+           return view('user.regagent')->with('user',$user)->with('agentdata',$agentdata)->with('city',$city);
+       }
+       else{
+        return back();
+    }
+}
 
-   public function register(Request $request){
+public function register(Request $request){
         // return dd($request);
     $data = request()->post();
         // return dd($city);

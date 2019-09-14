@@ -20,26 +20,29 @@ class TestController extends Controller
 {
 
     public function index(){
-        $property_id = 2;
-        /*Mail Sending*/
         
-        $property_agent = DB::table('properties')
-        ->join('agent_property','agent_property.property_id','=','properties.id')
-        ->join('agent_user','agent_user.agent_id','=','agent_property.agent_id')
-        ->join('users','users.id','=','agent_user.user_id')
-        ->where('properties.id',$property_id)
-        ->get();
+        $arr_ip = geoip()->getLocation('203.187.238.129');
+        return dd($arr_ip);
+        // $property_id = 2;
+        // /*Mail Sending*/
+
+        // $property_agent = DB::table('properties')
+        // ->join('agent_property','agent_property.property_id','=','properties.id')
+        // ->join('agent_user','agent_user.agent_id','=','agent_property.agent_id')
+        // ->join('users','users.id','=','agent_user.user_id')
+        // ->where('properties.id',$property_id)
+        // ->get();
         
-        $email = $property_agent[0]->email;
+        // $email = $property_agent[0]->email;
 
         
         
-        try{
-            \Mail::to($email)->send(new ContactInfoMailable($property_agent));
-        }
-        catch(\expection $e){
+        // try{
+        //     \Mail::to($email)->send(new ContactInfoMailable($property_agent));
+        // }
+        // catch(\expection $e){
 
-        }
+        // }
 
      // $phoneno = '9638246271';
      // $data = [

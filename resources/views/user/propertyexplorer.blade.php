@@ -15,6 +15,33 @@
         <div class="row">
             <div class="container col-md-3">
                 <div class="card">
+                    <div class="container">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">FILTER</div>
+                            </div>
+                            <div class="row">
+                                <form class="form-group py-2" method="get" action="{{ route('user.propertysearch') }}">
+                                    @csrf
+                                    <div class="col-md-12">
+                                        <input class="form-control" type="text" name="city" placeholder="CITY">
+                                    </div>
+                                    <div class="col-md-12 py-2">
+                                        <label class="d-block">PROPERTY TYPE :</label>
+                                        <input class="prepend btn" type="radio" name="type" value="Rent">RENT</input>
+                                        <input class="prepend btn" type="radio" name="type" value="Buy">BUY</input>
+                                    </div>
+                                    <div class="col-md-12 pt-2">
+                                        <input class="form-control pt-2" type="text" name="min_price" placeholder="MIN PRICE">
+                                        <input class="form-control pt-2" type="text" name="max_price" placeholder="MAX PRICE">
+                                    </div>
+                                    <div class="col-md-12 pt-2">
+                                        <input type="submit" name="submit" class="btn btn-success">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                     <div class="card-header">FEATURED PROPERTIES</div>
                     @foreach ($featuredprop as $key => $properties)
                     <div class="col-md-12 py-3">

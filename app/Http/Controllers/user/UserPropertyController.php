@@ -31,6 +31,7 @@ class UserPropertyController extends Controller
     }
     public function propertyshow($id){
         $user = Auth::user();
+        $city = DB::table('cities')->get()->ToArray();
         $property = Property::where('id',$id)->get();
         // return dd($property);
         $data = Property::join('image_property',function($join) use ($id){
@@ -64,7 +65,7 @@ class UserPropertyController extends Controller
 
         // return dd($image_data);
 
-        return view('user.property',compact('user','featured_img','image_id','property_name','image_data','property_address','property_type','property_state','image_path','property_rate'));
+        return view('user.property',compact('user','featured_img','image_id','property_name','image_data','property_address','property_type','property_state','image_path','property_rate','city'));
 
     }
 

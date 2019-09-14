@@ -22,31 +22,35 @@ class AgentController extends Controller
     }
     public function index(){
         $user = Auth::user();
+        $city = DB::table('cities')->get()->ToArray();
         $property = Property::all()->count();
         $data = DB::table('agents')->where('approval',0)->paginate(5);
         $agents = Agent::where('approval',0)->count();
-        return view('admin.approval')->with('user',$user)->with('data',$data)->with('agents',$agents);
+        return view('admin.approval')->with('user',$user)->with('data',$data)->with('agents',$agents)->with('city',$city);
     }
     public function searchar(){
         $c = 0;
         $q = Input::get('q');
         $user = Auth::user();
+        $city = DB::table('cities')->get()->ToArray();
         $agents = Agent::where('approval',$c)->count();
         $data = DB::table('agents')->whereNotIn('approval',[0])->orWhere('id','LIKE','%'.$q.'%')->orWhere('locality','LIKE','%'.$q.'%')->orWhere('agent_city','LIKE','%'.$q.'%')->where('agent_name','LIKE','%'.$q.'%')->paginate(5);
 
-        return view('admin.approval')->with('user',$user)->with('agents',$agents)->with('data',$data);
+        return view('admin.approval')->with('user',$user)->with('agents',$agents)->with('data',$data)->with('city',$city);
     }
 
     public function unapprove(){
         $user = Auth::user();
         $unapprovaldata = DB::table('agents')->where('approval',1)->paginate(5);
+        $city = DB::table('cities')->get()->ToArray();
         $agents = Agent::where('approval',0)->count();
-        return view('admin.unapprove')->with('user',$user)->with('data',$unapprovaldata)->with('agents',$agents);
+        return view('admin.unapprove')->with('user',$user)->with('data',$unapprovaldata)->with('agents',$agents)->with('city',$city);
     }
 
     public function approvalvalid($id){
         // return dd($id);
         $data = DB::table('agent_user')->where('agent_id',$id)->get()->ToArray();
+        $city = DB::table('cities')->get()->ToArray();
         
         foreach($data as $datas){
             $userid = $datas->user_id;

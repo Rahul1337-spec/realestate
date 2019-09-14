@@ -65,13 +65,17 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $arr_ip = geoip()->getLocation('67.205.146.29')->ToArray();
+        $location_code = $arr_ip['iso_code'];
+
         $UserRole = Role::where('name','user')->first();
-        
+
         $subscriber = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'phone' => $data['phone'],
             'password' => Hash::make($data['password']),
+            'iso_code' => $location_code,
         ]);
 
         $subscriber->roles()->attach($UserRole);

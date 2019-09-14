@@ -76,6 +76,33 @@
                                 <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
                             </form>
                         </li>
+                        <li class="nav-item">
+                            {{-- <div class="selector"><h3>Select</h3> 
+                                <div class="select">
+                                    <div class="container">
+                                        @foreach($city as $key => $da)
+                                        @if($key %3 == 0)
+                                        <div class="row">
+                                            @endif
+                                            <div class="col-md-3">
+                                                <a href="{{ $da->id }}"><h3>{{ $da->name }}</h3></a>
+                                            </div>
+                                            @if($key %3 == 2)
+                                        </div>
+                                        @endif
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>  --}}
+                            <form method="get" action="{{ route('searchcity') }}">
+                                <select name="select_city" onchange="this.form.submit()" class="form-control">
+                                    <option value="">Select City</option>
+                                    @foreach($city as $da)
+                                    <option value="{{ $da->id }}">{{ $da->name }}</option>
+                                    @endforeach
+                                </select>
+                            </form>     
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -99,7 +126,7 @@
                             <a href="#" class="nav-link">Blog</a></li>
                             @endhasrole
                             @hasrole('user')
-                            @if(Auth::user()->isAgent == 0)
+                            @if(Auth::user()->isAgent == 0 && Auth::user()->iso_code != 'IN')
                             <li class="nav-item">
                                 @if(Auth::user()->Applied_agent == 1)
                                 <a class="nav-link" href="#">In Process Agent</a>
@@ -112,37 +139,37 @@
                             @hasrole('agent')
                             @if(Auth::user()->isAgent == 1)
                             <li class="nav-item">
-                               <a class="nav-link" href="{{ route('agent.account') }}">Agent</a>
-                           </li>
-                           @endif
-                           @endhasrole
-                           <li class="nav-item dropdown">
-                               <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                   {{ Auth::user()->name }} <span class="caret"></span>
-                               </a>
+                             <a class="nav-link" href="{{ route('agent.account') }}">Agent</a>
+                         </li>
+                         @endif
+                         @endhasrole
+                         <li class="nav-item dropdown">
+                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                 {{ Auth::user()->name }} <span class="caret"></span>
+                             </a>
 
-                               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                   <a class="dropdown-item" href="{{ route('logout') }}"
-                                   onclick="event.preventDefault();
-                                   document.getElementById('logout-form').submit();">
-                                   {{ __('Logout') }}
-                               </a>
+                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                 <a class="dropdown-item" href="{{ route('logout') }}"
+                                 onclick="event.preventDefault();
+                                 document.getElementById('logout-form').submit();">
+                                 {{ __('Logout') }}
+                             </a>
 
-                               <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                   @csrf
-                               </form>
-                           </div>
-                       </li>
-                       @endguest
-                   </ul>
-               </div>
-           </div>
-       </nav>
-       @yield('content')
+                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                 @csrf
+                             </form>
+                         </div>
+                     </li>
+                     @endguest
+                 </ul>
+             </div>
+         </div>
+     </nav>
+     @yield('content')
 
-       @include('layouts.footer')
-   </div>
-   <script type="text/javascript">
+     @include('layouts.footer')
+ </div>
+ <script type="text/javascript">
     jQuery(window).load(function(){
         $('.gallery-responsive').slick({
             dots: true,

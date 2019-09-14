@@ -2,18 +2,18 @@
 @section('content')
 <main id="page-1122">
     <div class="container-fluid">
-       <div class="container">
-           <div class="row">
+     <div class="container">
+         <div class="row">
             <div class="col-md-12 col-sm-12">
-               <div class="card">
-                   <div class="card-header"><h2>All Agents</h2></div>
-               </div>
-           </div>
-       </div> 
+             <div class="card">
+                 <div class="card-header"><h2>All Agents</h2></div>
+             </div>
+         </div>
+     </div> 
 
-       @foreach($agent as $key => $da)
-       @if($key % 3 == 0)
-       <div class="row">
+     @foreach($agent as $key => $da)
+     @if($key % 3 == 0)
+     <div class="row">
         @endif
         <div class="col-md-3 py-3">
             <div class="card">

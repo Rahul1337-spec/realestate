@@ -15,7 +15,10 @@ Route::get('/',[
     'as' => '/',
     'uses' => 'HomeController@callback'
 ]);
-
+Route::get('searchcity',[
+    'as' => 'searchcity',
+    'uses' => 'HomeController@searchcity'
+]);
 Auth::routes();
 Auth::routes(['verify' => true]);
 
@@ -78,6 +81,18 @@ Route::namespace('admin')->prefix('admin')->middleware(['auth','auth.admin'])->n
         'as' => 'searchprop',
         'uses' => 'AdminController@searchprop'
     ]);
+    Route::get('/citymanage',[
+        'as' => 'citymanage',
+        'uses' => 'CityController@index'
+    ]);
+    Route::post('/cityadd',[
+        'as' => 'cityadd',
+        'uses' => 'CityController@cityadd'
+    ]);
+    Route::get('delete/{id}',[
+        'as' => 'deletecity',
+        'uses' => 'CityController@delete'
+    ]);
 });
 
 
@@ -132,6 +147,10 @@ Route::namespace('user')->prefix('user')->middleware(['auth','auth.user'])->name
     Route::post('contact',[
         'as' => '.contactinfo',
         'uses' => 'ContactController@contactdata'
+    ]);
+    Route::get('propertysearch',[
+        'as' => '.propertysearch',
+        'uses' => 'UserController@propertysearch'
     ]);
 });
 

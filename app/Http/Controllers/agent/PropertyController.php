@@ -24,6 +24,7 @@ class PropertyController extends Controller
     }    
     public function index(){
         $user = Auth::user();
+        $city = DB::table('cities')->get()->ToArray();
         $userid = $user->id;
         $agent = User::join('agent_user', function ($join) use ($userid) {
             $join->on('users.id', '=', 'agent_user.user_id')->where('user_id',$userid);
@@ -34,7 +35,7 @@ class PropertyController extends Controller
         // }
         // return dd($agent);
         if($user->hasAnyRole('agent')){
-            return view('agent.property')->with('user',$user)->with('agentdata',$agent);
+            return view('agent.property')->with('user',$user)->with('agentdata',$agent)->with('city',$city);
         }
         else{
             return route('login');

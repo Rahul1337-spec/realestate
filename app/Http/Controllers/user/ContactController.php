@@ -24,6 +24,7 @@ class ContactController extends Controller
         /*----Cruical variable data----*/ 
         $property_id = $id;
         $user = Auth::user();
+        $city = DB::table('cities')->get()->ToArray();
         $emptyvar = '';
         /*---- Fetch full data with join--------*/ 
         $property_data = DB::table('properties')->where('id',$property_id)->get();
@@ -35,7 +36,7 @@ class ContactController extends Controller
         ->where('property_id',$property_id)
         ->get();
         
-        return view('user.enquiry')->with('user',$user)->with('property',$property_data)->with('check',$enquiry_check);
+        return view('user.enquiry')->with('user',$user)->with('property',$property_data)->with('check',$enquiry_check)->with('city',$city);
 
         // if(!$enquiry_check == ''){
         //       return dd($enquiry_check);

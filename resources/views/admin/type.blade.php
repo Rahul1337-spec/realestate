@@ -37,59 +37,59 @@
                                     <div class="card">
                                         <div class="card-header">Add Types</div>
                                         <form method="post" action="{{ route('admin.create.type') }}">
-                                         @csrf
-                                         <div class="card-body">
-                                           @if(session()->has('message'))
-                                           <div class="alert alert-success">
-                                            {{ session()->get('message') }}
+                                           @csrf
+                                           <div class="card-body">
+                                             @if(session()->has('message'))
+                                             <div class="alert alert-success">
+                                                {{ session()->get('message') }}
+                                            </div>
+                                            @endif
+                                            <input id="type" type="text" class="form-control @error('type') is-invalid @enderror" name="type" placeholder="Type Name" value="{{ old('type') }}" required autocomplete="name" autofocus>
+                                            @error('type')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
                                         </div>
-                                        @endif
-                                        <input id="type" type="text" class="form-control @error('type') is-invalid @enderror" name="type" placeholder="Type Name" value="{{ old('type') }}" required autocomplete="name" autofocus>
-                                        @error('type')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                        @enderror
+                                        <div class="card-body">
+                                            <button type="submit" class="btn btn-primary">
+                                                {{ __('Add') }}
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        Manage Types
                                     </div>
                                     <div class="card-body">
-                                        <button type="submit" class="btn btn-primary">
-                                            {{ __('Add') }}
-                                        </button>
+                                        <table class="table">
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Type</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            @foreach($typedata as $data)
+                                            <tr>
+                                                <td>{{ $data->id }}</td>
+                                                <td>{{ $data->name }}</td>
+                                                <td ><a href="#" class="btn btn-primary">Edit</a>
+                                                    <a href="{{ route('admin.delete',$data->id) }}" class="btn btn-danger">Delete</a>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </table>
                                     </div>
-                                </form>
+                                </div>   
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-header">
-                                    Manage Types
-                                </div>
-                                <div class="card-body">
-                                    <table class="table">
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Type</th>
-                                            <th>Action</th>
-                                        </tr>
-                                        @foreach($typedata as $data)
-                                        <tr>
-                                            <td>{{ $data->id }}</td>
-                                            <td>{{ $data->name }}</td>
-                                            <td ><a href="#" class="btn btn-primary">Edit</a>
-                                                <a href="{{ route('admin.delete',$data->id) }}" class="btn btn-danger">Delete</a>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </table>
-                                </div>
-                            </div>   
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 </div>
 @endhasrole

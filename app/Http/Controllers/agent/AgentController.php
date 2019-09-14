@@ -21,8 +21,9 @@ class AgentController extends Controller
 
     public function index(){
         $user = Auth::user();
+        $city = DB::table('cities')->get()->ToArray();
         if($user->hasAnyRole('agent')){
-            return view('agent.account')->with('user',$user);
+            return view('agent.account')->with('user',$user)->with('city',$city);
         }
         else{
             return route('login');
@@ -34,6 +35,7 @@ class AgentController extends Controller
     }
     public function manage(){
         $user = Auth::user();
+        $city = DB::table('cities')->get()->ToArray();
 
         $agent = DB::table('users')
         ->join('agent_user','agent_user.user_id','=','users.id')
@@ -49,15 +51,16 @@ class AgentController extends Controller
         ->where('agents.id','LIKE',$agent_id)
         ->get();
 
-        return view('agent.manage')->with('user',$user)->with('agentid',$agent_id)->with('property',$property);
+        return view('agent.manage')->with('user',$user)->with('agentid',$agent_id)->with('property',$property)->with('city',$city);
     }
     public function clients($id){
         $user = Auth::user();
+        $city = DB::table('cities')->get()->ToArray();
         $data_enquiry = DB::table('enquiry_property')
         ->join('enquiries','enquiries.id','=','enquiry_property.enquiry_id')
         ->where('enquiry_property.property_id',$id)
         ->get();
-        return view('agent.clients')->with('user',$user)->with('clients',$data_enquiry);
+        return view('agent.clients')->with('user',$user)->with('clients',$data_enquiry)->with('city',$city);
     }
 
     public function delete($id){

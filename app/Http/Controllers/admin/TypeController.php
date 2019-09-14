@@ -25,20 +25,20 @@ class TypeController extends Controller
     }
 
     public function typeinsert(request $request){
-       $agents = Agent::where('approval',0)->count();
-       $data = $request->ToArray();
-       $data_type = $request->get('type');
+     $agents = Agent::where('approval',0)->count();
+     $data = $request->ToArray();
+     $data_type = $request->get('type');
         // $type = Input::get('type');
-       $valid = Validator::make($data, [
+     $valid = Validator::make($data, [
         'type' => ['required', 'string', 'max:255'],
     ]);
         // return back()->with('message','validated');
         // return dd($valid);
 
-       if($valid->fails()){
-           return back()->withErrors($valid);
-       }
-       else{
+     if($valid->fails()){
+         return back()->withErrors($valid);
+     }
+     else{
         $query = Type::create([
             'name' => $data_type, 
         ])->save();
