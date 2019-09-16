@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use Images;
 use App\User;
 use App\Agent;
 use App\Type;
@@ -121,9 +122,18 @@ class PropertyController extends Controller
                     $name = $actual_name.".".$extension;
                     $i++;
                 }
+                // return dd($featured_image);
+                /*Working code for feature image upload*/ 
                 $destinationPath = public_path('images');
-                    // return dd($destinationPath);
-                $featured_image->move($destinationPath, $name)->getRealPath();
+                // $featured_image->move($destinationPath, $name)->getRealPath();
+                /*Working code up*/
+
+                /*Working code for image resize as well uploading*/ 
+                $img = Images::make($featured_image->getRealPath());
+                $img->resize(300, 300, function ($constraint) {
+                    $constraint->aspectRatio();
+                })->save($destinationPath.'/'.$name);
+
                 // $featured_path = $destinationPath.'\\'.$name;
 
                 $postdata = Property::create([
@@ -140,13 +150,16 @@ class PropertyController extends Controller
 
                 $postdata->agents()->attach($agent_id);
                 $postdata->type()->attach($type_id);
+
                 $postdata->cities()->attach($state_id);
+
                 $postdata->asset()->attach($asset_id);
+
                 $postdata->save();
 
                 /*------------Finding the Buy and Rent Types to add up for agent---------------*/
                 $type_check = $request->type;
-                // return dd($type_check);
+                
                 $properties_type = DB::table('agent_property')->where('agent_id',$agent_id)->get();
                 $prop_check = DB::table('types')->where('name',$type_check)->get();
 

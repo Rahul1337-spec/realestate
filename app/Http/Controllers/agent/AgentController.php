@@ -12,6 +12,7 @@ use App\Image;
 use App\Type;
 use App\Agent;
 use App\City; 
+use File;
 
 class AgentController extends Controller
 {
@@ -65,6 +66,7 @@ class AgentController extends Controller
 
     public function delete($id){
         if($id){
+
             $property = DB::table('properties')
             ->join('agent_property','agent_property.property_id','=','properties.id')
             ->join('city_property','city_property.property_id','=','properties.id')
@@ -72,12 +74,17 @@ class AgentController extends Controller
             ->join('images','images.id','=','image_id')
             ->where('properties.id',$id)
             ->get();
-            
-            $query = DB::table('images')->where('id',$property[0]->image_id)->delete();
+
+            foreach($property as $da){
+                $query = File::delete('images/' . $da->filename);
+                $query = File::delete('images/' . $da->featured_img);
+                $query = DB::table('images')->where('id',$da->image_id)->delete();
+                $query = DB::table('image_property')->where('property_id',$da->property_id)->delete();
+            }
+
             $query = DB::table('city_property')->where('city_id',$property[0]->city_id)->delete();
             $query = DB::table('agent_property')->where('property_id',$property[0]->property_id)->delete();
             $query = DB::table('property_type')->where('property_id',$property[0]->property_id)->delete();
-            $query = DB::table('image_property')->where('property_id',$property[0]->property_id)->delete();
             $query = DB::table('properties')->where('id',$property[0]->property_id)->delete();
             /*---------------Update new counts for deleted data---------------------------*/
 

@@ -64,6 +64,7 @@ class HomeController extends Controller
         else{
             $arr_ip = geoip()->getLocation('203.187.238.129')->ToArray();
             $location_var = $arr_ip['city'];
+
             $city = DB::table('cities')->get()->ToArray();
 
             if($location_var == 'Vadodara'){
