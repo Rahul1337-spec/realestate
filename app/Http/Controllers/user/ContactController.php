@@ -47,6 +47,8 @@ class ContactController extends Controller
         // }   
     }
     public function contactdata(Request $request){
+
+
         $data = $request->ToArray();
 
 
@@ -69,39 +71,41 @@ class ContactController extends Controller
             $postdata->property_enquiry()->attach($request->property_id);
             $postdata->save();
 
-            $phoneno = $postdata->phone;
-            $data = [
-                'phone' => '91'.$phoneno, // Receivers phone
-                'body' => 'Thank you for using our service, Your request has been forwarded to respected property owner', // Message
-            ];
-            $json = json_encode($data); // Encode data to JSON
-            // URL for request POST /message
-            $url = 'https://eu68.chat-api.com/instance64993/sendMessage?token=tfdzfg3cvw5nqk2h';
+        //     $phoneno = $postdata->phone;
+        //     $data = [
+        //         'phone' => '91'.$phoneno, // Receivers phone
+        //         'body' => 'Thank you for using our service, Your request has been forwarded to respected property owner', // Message
+        //     ];
+        //     $json = json_encode($data); // Encode data to JSON
+        //     // URL for request POST /message
+        //     $url = 'https://eu68.chat-api.com/instance64993/sendMessage?token=tfdzfg3cvw5nqk2h';
 
-            // Make a POST request
+        //     // Make a POST request
 
-            $options = stream_context_create(['http' => [
-                'method'  => 'POST',
-                'header'  => 'Content-type: application/json',
-                'content' => $json
-            ]
-        ]);
+        //     $options = stream_context_create(['http' => [
+        //         'method'  => 'POST',
+        //         'header'  => 'Content-type: application/json',
+        //         'content' => $json
+        //     ]
+        // ]);
             // Send a request
-            $result = file_get_contents($url, false, $options);
+            // $result = file_get_contents($url, false, $options);
 
             if($postdata){
                 // Sending mail to property agent 
-             $property_agent = DB::table('properties')
-             ->join('agent_property','agent_property.property_id','=','properties.id')
-             ->join('agent_user','agent_user.agent_id','=','agent_property.agent_id')
-             ->join('users','users.id','=','agent_user.user_id')
-             ->where('properties.id',$request->property_id)
-             ->get();
+               $property_agent = DB::table('properties')
+               ->join('agent_property','agent_property.property_id','=','properties.id')
+               ->join('agent_user','agent_user.agent_id','=','agent_property.agent_id')
+               ->join('users','users.id','=','agent_user.user_id')
+               ->where('properties.id',$request->property_id)
+               ->get();
 
+               $enquiry_count = DB::table('enquiry_property')->where('property_id',$request->property_id)->count();
+               $query = DB::table('properties')->where('id',$request->property_id)->update(['enquiry_count'=>$enquiry_count]);
+               
+               $email = $property_agent[0]->email;
 
-             $email = $property_agent[0]->email;
-
-             try{
+               try{
                 \Mail::to($email)->send(new ContactInfoMailable($property_agent));
             }
             catch(\expection $e){

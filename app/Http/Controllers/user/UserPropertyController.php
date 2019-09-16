@@ -45,7 +45,7 @@ class UserPropertyController extends Controller
             ->where('image_property.image_id','LIKE',$da)
             ->get();
         }
-
+        
         foreach($images as $image){
             $image_path[]=$image[0]->filename;
         }

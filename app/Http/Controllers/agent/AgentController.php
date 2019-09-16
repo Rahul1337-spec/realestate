@@ -35,6 +35,7 @@ class AgentController extends Controller
 
     }
     public function manage(){
+        
         $user = Auth::user();
         $city = DB::table('cities')->get()->ToArray();
 
@@ -61,6 +62,7 @@ class AgentController extends Controller
         ->join('enquiries','enquiries.id','=','enquiry_property.enquiry_id')
         ->where('enquiry_property.property_id',$id)
         ->get();
+
         return view('agent.clients')->with('user',$user)->with('clients',$data_enquiry)->with('city',$city);
     }
 

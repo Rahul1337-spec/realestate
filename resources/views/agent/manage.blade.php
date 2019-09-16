@@ -38,7 +38,7 @@
                                 <h4>{{ $properties->property_name }}</h4>
                                 <h6>{{ $properties->property_type }}</h6>
                                 <h5><a href="" class="label label-success">Rs.{{ $properties->property_rate }}</a></h5>
-                                <a href="{{ route('agent.clients',$properties->id) }}" class="btn btn-success">CLIENTS</a>
+                                <a href="{{ route('agent.clients',$properties->id) }}" class="btn btn-success">CLIENTS ({{ $properties->enquiry_count }})</a>
                                 <a href="{{ route('agent.delete',$properties->id) }}" class="btn btn-danger">REMOVE</a>
                                 {{-- <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#mymodal">Open Modal</button> --}}
                                 <!--button type="submit" class="btn btn-primary btn-block">ADD TO CART</button-->
