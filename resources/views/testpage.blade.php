@@ -54,22 +54,40 @@
                     <button name="submit" class="btn">Submit</button>
                 </form> --}}
                 <div class="your-class">
-                  <div>your content</div>
-                  <div>your content</div>
-                  <div>your content</div>
-              </div>
-          </div>
-      </div>
-  </div>
+                    <form method="post" action="{{ route('testpage.data') }}" enctype="multipart/form-data">
+                        @csrf
+                        <div class="input-group control-group increment">
+                            <input type="file" name="document1" class="form-control">
+                            <input type="file" name="document2" class="form-control">
+                            <div class="input-group-btn"> 
+                                <button type="submit" class="btn btn-success" type="button"><i class="glyphicon glyphicon-plus"></i>Add</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 
-  <script type="text/javascript">
-    jQuery('.list-group-item a').mouseover(function(e){
-        e.preventDefault();
-        jQuery('img.img-box ').attr('src',$(this).attr("href"));
-    });
-    $(document).ready(function(){
-      $('.your-class').slick({
+    <script type="text/javascript">
+  //   jQuery('.list-group-item a').mouseover(function(e){
+  //       e.preventDefault();
+  //       jQuery('img.img-box ').attr('src',$(this).attr("href"));
+  //   });
+  //   $(document).ready(function(){
+  //     $('.your-class').slick({
 
+  //     });
+  // });
+  $(document).ready(function() {
+
+      $(".btn-success").click(function(){ 
+          var html = $(".clone").html();
+          $(".increment").after(html);
+      });
+
+      $("body").on("click",".btn-danger",function(){ 
+          $(this).parents(".control-group").remove();
       });
   });
 

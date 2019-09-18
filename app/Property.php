@@ -45,6 +45,9 @@ class Property extends Model
     public function enquireprop(){
         $this->belongsToMany('App\Enquiry');
     }
+    public function document(){
+        $this->belongsToMany('App\Doc');
+    }
     // public function index(request $request){
     //     $user = Auth::user();
     //     if($user->hasAnyRole('user')){

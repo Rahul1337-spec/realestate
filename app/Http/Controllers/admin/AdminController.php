@@ -48,4 +48,5 @@ class AdminController extends Controller
     public function type(request $request){
         return dd($request);
     }
+
 }

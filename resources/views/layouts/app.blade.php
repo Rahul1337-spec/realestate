@@ -76,6 +76,7 @@
                                 <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
                             </form>
                         </li>
+                        @hasrole('user')
                         <li class="nav-item">
                             {{-- <div class="selector"><h3>Select</h3> 
                                 <div class="select">
@@ -103,6 +104,27 @@
                                 </select>
                             </form>     
                         </li>
+                        @endhasrole
+                       {{--  <li class="nav-item"> 
+                            <a href="#" class="dropdown">
+                                <h2 class="menu-title">Select</h2>
+                                <ul class="drop-down">
+                                    <div class="custom-option">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <ul>
+                                                        <li>Option 1</li>
+                                                        <li>Option 2</li>
+                                                        <li>Option 3</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ul>
+                            </a>
+                        </li> --}}
                     </ul>
 
                     <!-- Right Side Of Navbar -->

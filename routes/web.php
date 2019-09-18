@@ -105,6 +105,22 @@ Route::namespace('admin')->prefix('admin')->middleware(['auth','auth.admin'])->n
         'as' => 'deleteasset',
         'uses' => 'AssetsController@delete'
     ]);
+    Route::get('Documentmanage',[
+        'as' => 'documentmanage',
+        'uses' => 'DocumentController@index'
+    ]);
+    Route::post('Documenttype',[
+        'as' => 'document',
+        'uses' => 'DocumentController@addtype'
+    ]);
+    Route::get('deletedoc/{id}',[
+        'as' => 'deletedoc',
+        'uses' => 'DocumentController@delete'
+    ]);
+    Route::get('docverify',[
+        'as' => 'docverify',
+        'uses' => 'VerifyController@index'
+    ]); 
 });
 
 
@@ -203,12 +219,12 @@ Route::namespace('agent')->prefix('agent')->middleware(['auth','auth.agent'])->n
 /*--------------Test Authentication area-------------------*/
 /*---------------------------------------------------------*/ 
 
-// Route::get('testpage',[
-//     'as' => 'testpage',
-//     'uses' => 'TestController@index'
-// ]);
-// Route::post('testpage',[
-//     'as' => 'testpage.show',
-//     'uses' => 'TestController@imagegal'
-// ]);
+Route::get('testpage',[
+    'as' => 'testpage',
+    'uses' => 'TestController@index'
+]);
+Route::post('testpage',[
+    'as' => 'testpage.data',
+    'uses' => 'TestController@testdata'
+]);
 Route::get('/test','TestController@index');

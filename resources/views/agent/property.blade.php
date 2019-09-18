@@ -165,6 +165,24 @@
                                     </span>
                                     @enderror
                                 </div>
+                                <div class="col-md-4">
+                                    <label class="form-control-label">Upload Document 1</label>
+                                    <input type="file" name="document1">
+                                    @error('document1')
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-control-label">Upload Document 2</label>
+                                    <input type="file" name="document2">
+                                    @error('document2')
+                                    <span class="invalid-feedback">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-4">

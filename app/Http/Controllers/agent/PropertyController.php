@@ -18,6 +18,8 @@ use App\Property;
 use App\Image;
 use App\City;
 use App\Asset;
+use App\Doc;
+use App\Doctype;
 
 class PropertyController extends Controller
 {
@@ -82,17 +84,21 @@ class PropertyController extends Controller
                 'type' => ['required'],
                 'asset' => ['required'],
                 'featured' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-                'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+                'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+                'document1' => 'required|max:10000|mimes:doc,docx',
+                'document2' => 'required|max:10000|mimes:doc,docx'
             ]);
             /*------------------------------------------------------------------*/
             /*---------------If Valid Push forward the data---------------------*/ 
             if($valid){
+
                 $type = DB::Table('types')->where('name',$request->type)->get();
                 $asset = $request->asset;
                 $state = $request->state;
 
                 $assetattach = DB::table('assets')->where('name',$asset)->get()->ToArray();
                 $stateattach = DB::table('cities')->where('name',$state)->get()->ToArray();
+
                 
                 $state_id = $stateattach[0]->id;
                 $asset_id = $assetattach[0]->id;
@@ -106,14 +112,21 @@ class PropertyController extends Controller
                     $agent_id = $data->id;
                     $agent_name = $data->agent_name;
                 }
+                /*Fetching the image*/ 
+                $featured_image = $request->featured; 
+                /*Fetching done*/ 
 
-                $featured_image = $request->featured;
                 // return dd($request);
+                /*Geting particular data out of the fetched resources*/ 
                 $name = $featured_image->getClientOriginalName();
+
                     // return dd($name);
                 $actual_name = pathinfo($name,PATHINFO_FILENAME);
+
                 $original_name = $actual_name;
+
                 $extension = pathinfo($name, PATHINFO_EXTENSION);
+
                     // return dd($actual_name);
                 $i = 1;
                 while(file_exists('images/'.$actual_name.".".$extension))
@@ -136,6 +149,43 @@ class PropertyController extends Controller
 
                 // $featured_path = $destinationPath.'\\'.$name;
 
+                /*Document uploading section here*/
+
+                /*Fetching important document main resource*/
+                $doc1 = $request->document1;
+                $doc2 = $request->document2;
+                /*-----------------------------------------*/
+                /*Fetching names out of data*/
+                $doc1_name = $doc1->getClientOriginalName();
+                $doc2_name = $doc2->getClientOriginalName();
+
+                $doc1_actual = pathinfo($doc1_name,PATHINFO_FILENAME);
+                $doc2_actual = pathinfo($doc2_name,PATHINFO_FILENAME);
+
+                $doc1_original = $doc1_actual;
+                $doc2_original = $doc2_actual;
+
+                $extension1 = pathinfo($doc1_name,PATHINFO_EXTENSION);
+                $extension2 = pathinfo($doc2_name,PATHINFO_EXTENSION);
+                /*---------------------------*/
+                /*Removing chance of any redundancy in documents data*/ 
+                $a = 1; 
+                while(file_exists('documents/'.$doc1_actual.".".$extension1)){
+                    $doc1_actual = (string)$doc1_original.$a;
+                    $doc1_name = $doc1_actual.".".$extension1;
+                    $a++;
+                }
+                $b = 1;
+                while(file_exists('documents/'.$doc2_actual.".".$extension2)){
+                    $doc2_actual = (string)$doc2_original.$b;
+                    $doc2_name = $doc2_actual.".".$extension2;
+                    $b++;
+                } 
+                /*Storing document on server*/
+                $destinationPathdocs = public_path('documents');
+                $doc1->move($destinationPathdocs, $doc1_name)->getRealPath();
+                $doc2->move($destinationPathdocs, $doc2_name)->getRealPath();   
+
                 $postdata = Property::create([
                     'property_name' => $request->property_name,
                     'property_address' => $request->property_address,
@@ -150,12 +200,41 @@ class PropertyController extends Controller
 
                 $postdata->agents()->attach($agent_id);
                 $postdata->type()->attach($type_id);
-
                 $postdata->cities()->attach($state_id);
-
                 $postdata->asset()->attach($asset_id);
 
                 $postdata->save();
+
+
+                $property_data = DB::table('properties')->where('id',$postdata->id)->get()->ToArray();
+                /*------------Adding document property tables--------------*/ 
+                /*Document Uploading section ends here*/ 
+                if(isset($doc1)):
+                    $path = $destinationPathdocs.'\\'.$doc1_name;
+                    $docData = Doc::create([
+                        'name' => $doc1_name,
+                        'path' => $path,
+                    ]);
+                    
+                    $doctype = DB::table('doctypes')->where('name','Document1')->get()->ToArray();
+                    $doc_id = $doctype[0]->id;
+                    $docData->documenttype()->attach($doc_id);
+                    $docData->documents()->attach($property_data[0]->id);
+                    $docData->save();
+                endif;
+                if(isset($doc2)):
+                    $path = $destinationPathdocs.'\\'.$doc2_name;
+                    $docData = Doc::create([
+                        'name' => $doc2_name,
+                        'path' => $path,
+                    ]);
+
+                    $doctype = DB::table('doctypes')->where('name','Document2')->get()->ToArray();
+                    $doc_id = $doctype[0]->id;
+                    $docData->documenttype()->attach($doc_id);
+                    $docData->documents()->attach($property_data[0]->id);
+                    $docData->save();
+                endif;
 
                 /*------------Finding the Buy and Rent Types to add up for agent---------------*/
                 $type_check = $request->type;

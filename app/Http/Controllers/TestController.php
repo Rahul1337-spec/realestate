@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Mail\AgentConfirmMailable;
 use App\Mail\ContactInfoMailable;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\File;
 use Mail;
 use Auth;
 use App\User;
@@ -19,10 +21,31 @@ use App\Type;
 class TestController extends Controller
 {
 
+    public function testdata(request $request){
+        // return dd($request);
+        if($request->hasFile('document1')):
+            $doc1 = Input::file('document1')->getClientOriginalName();
+            echo "$doc1";
+        endif;
+        if($request->hasFile('doucment2')):
+            $doc2 = Input::file('document2')->getClientOriginalName();
+        endif;
+        if(isset($doc1)):
+            echo "First file found";
+        endif;
+        if(isset($doc2)):
+            echo "Second file found";
+        endif;
+        if(!isset($doc2)):
+            echo "Second not found";
+        endif;
+        return dd($request);
+    }
+
     public function index(){
-        
-        $arr_ip = geoip()->getLocation('203.187.238.129');
-        return dd($arr_ip);
+        return view('testpage');
+        // $arr_ip = geoip()->getLocation('203.187.238.129');
+        // return dd($arr_ip);
         // $property_id = 2;
         // /*Mail Sending*/
 
@@ -32,11 +55,11 @@ class TestController extends Controller
         // ->join('users','users.id','=','agent_user.user_id')
         // ->where('properties.id',$property_id)
         // ->get();
-        
+
         // $email = $property_agent[0]->email;
 
-        
-        
+
+
         // try{
         //     \Mail::to($email)->send(new ContactInfoMailable($property_agent));
         // }
