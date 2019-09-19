@@ -86,11 +86,11 @@
 
                                             <div class="col-md-4 col-sm-12">
                                                 <div class="form-group">
-                                                 <label class="form-control-label">Featured Image</label>
-                                                 <input type="file" name="featured" class="form-control"> 
-                                             </div>
-                                         </div>
-                                         <div class="col-md-4 col-sm-12">
+                                                   <label class="form-control-label">Featured Image</label>
+                                                   <input type="file" name="featured" class="form-control"> 
+                                               </div>
+                                           </div>
+                                           <div class="col-md-4 col-sm-12">
                                             <div class="form-group">
                                                 <label class="form-control-label">Property Sample Images</label>
                                                 <div class="input-group control-group increment" >

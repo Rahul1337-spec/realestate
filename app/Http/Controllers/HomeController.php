@@ -56,10 +56,10 @@ class HomeController extends Controller
             // $agents = DB::table('agents')->where('approval', 0)->get()->ToArray;
             $for_rent = DB::table('property_type')->where('type_id',3)->count();
             $for_buy = DB::table('property_type')->where('type_id',4)->count();
-
+            $verified_count = DB::table('properties')->where('doc_verified',0)->count();
             $agents = Agent::where('approval',0)->count();
             $revoke = Agent::where('approval',1)->count();
-            return view('home')->with('user',$user)->with('agentdata',$agentdata)->with('agents',$agents)->with('revoke',$revoke)->with('property',$property)->with('property_count',$property_count)->with('for_rent',$for_rent)->with('for_buy',$for_buy)->with('property_slide',$property_slide)->with('city',$city);
+            return view('home')->with('user',$user)->with('agentdata',$agentdata)->with('agents',$agents)->with('revoke',$revoke)->with('property',$property)->with('property_count',$property_count)->with('for_rent',$for_rent)->with('for_buy',$for_buy)->with('property_slide',$property_slide)->with('city',$city)->with('verify',$verified_count);
         }
         else{
             $arr_ip = geoip()->getLocation('203.187.238.129')->ToArray();

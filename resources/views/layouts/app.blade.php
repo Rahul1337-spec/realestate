@@ -78,23 +78,6 @@
                         </li>
                         @hasrole('user')
                         <li class="nav-item">
-                            {{-- <div class="selector"><h3>Select</h3> 
-                                <div class="select">
-                                    <div class="container">
-                                        @foreach($city as $key => $da)
-                                        @if($key %3 == 0)
-                                        <div class="row">
-                                            @endif
-                                            <div class="col-md-3">
-                                                <a href="{{ $da->id }}"><h3>{{ $da->name }}</h3></a>
-                                            </div>
-                                            @if($key %3 == 2)
-                                        </div>
-                                        @endif
-                                        @endforeach
-                                    </div>
-                                </div>
-                            </div>  --}}
                             <form method="get" action="{{ route('searchcity') }}">
                                 <select name="select_city" onchange="this.form.submit()" class="form-control">
                                     <option value="">Select City</option>
@@ -102,7 +85,7 @@
                                     <option value="{{ $da->id }}">{{ $da->name }}</option>
                                     @endforeach
                                 </select>
-                            </form>     
+                            </form>    
                         </li>
                         @endhasrole
                        {{--  <li class="nav-item"> 
@@ -270,6 +253,15 @@
 
         @yield('script')
     });
+</script>
+<script type="text/javascript">
+    var elems = document.getElementsByClassName('confirm');
+    var confirmIt = function (e) {
+        if (!confirm('Are you sure?')) e.preventDefault();
+    };
+    for (var i = 0, l = elems.length; i < l; i++) {
+        elems[i].addEventListener('click', confirmIt, false);
+    }
 </script>
 
 </body>

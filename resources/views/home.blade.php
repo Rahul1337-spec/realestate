@@ -112,10 +112,10 @@
                         </a>
                     </div>
                     <div class="col-md-4">
-                        <a href="#">
+                        <a href="{{ route('admin.docverify') }}">
                             <div class="card">
-                                <div class="card-header">Property Document</div>
-                                <div class="card-body">Verfiy New Property Documents</div>
+                                <div class="card-header">Property Document </div>
+                                <div class="card-body">Verfiy <span class="text-danger">{{ $verify }}</span> New Properties Documents</div>
                             </div>
                         </a>
                     </div>
@@ -153,7 +153,7 @@
     <div class="container">
         <div class="row flex-row">
             <div class="col-md-4 col-sm-12">
-             <a href="{{ route('agent.property') }}">
+               <a href="{{ route('agent.property') }}">
                 <div class="card-header text-center">
                     <h2>Post Property</h2>
                     <div class="card-body">
@@ -229,7 +229,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-sm-12">
-             <a href="{{ route('user.agent') }}">
+               <a href="{{ route('user.agent') }}">
                 <div class="card-header text-center">
                     <h2>Apply For agent</h2>
                     <div class="card-body">
@@ -273,8 +273,8 @@
     <div class="container">
         <div class="col-md-12">
             <div class="row slicker">                
-             @foreach($property as $prop)
-             <div class="col-md-4 pb-4">
+               @foreach($property as $prop)
+               <div class="col-md-4 pb-4">
                 <div class="card">
                     <div class="card-header"><h2>{{ $prop->property_name }}</h2></div>
                     <div class="card-body">
@@ -314,7 +314,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-sm-12">
-             <a href="{{ route('user.agent') }}">
+               <a href="{{ route('user.agent') }}">
                 <div class="card-header text-center">
                     <h2>Apply For agent</h2>
                     <div class="card-body">

@@ -53,7 +53,7 @@ class UserController extends Controller
         $featuredprop = DB::table('properties')->paginate(2);
 
         $input = Input::all();
-
+        
         if(isset($input['type'])){
             $type = Type::where('name',$input['type'])->get()->ToArray();          
             $type_id = $type[0]['id'];
@@ -64,31 +64,36 @@ class UserController extends Controller
             ->join('property_type','property_type.property_id','=','properties.id')
             ->where('properties.property_state',$input['city'])
             ->get());
-
-        // return dd($property);
-        $min = $input['min_price'];
-        $max = $input['max_price'];
-
-
+        
+        
+        // return dd($bhk_3);
         // $search = $property->where('property_rate','<','6000');
         // return dd($search);
         if(isset($input['city'])):
             $search = $property->where('property_state', '=', $input['city']);
         endif;
 
-        if(isset($min) && isset($max)):       
-            $search = $property->whereBetween('property_rate',[$min,$max]);   
-    endif;
-
-    if(isset($type_id)):
-        $search = $property->where('type_id','=',$type_id);
-    endif;
-
-    // return dd($search);
-    $data = $search->paginate(10);
+        if(isset($min) && isset($max)):
+           $max = $input['max_price'];
+       $min = $input['min_price'];       
+       $search = $property->whereBetween('property_rate',[$min,$max]);   
+   endif;
+   if(isset($type_id)):
+    $search = $property->where('type_id','=',$type_id);
+endif;
+if(isset($input['2_BHK'])):
+    $bhk_2 = $input['2_BHK'];
+    $search = $property->where('asset',$bhk_2);
+endif;
+if(isset($input['3_BHK'])):
+    $bhk_3 = $input['3_BHK'];
+    $search = $property->where('asset',$bhk_3);
+endif;
+// return dd($search);
+$data = $search->paginate(10);
     // return dd($data);
 
-    return view('user.propertyexplorer')->with('user',$user)->with('property',$data)->with('featuredprop',$featuredprop)->with('city',$city);
+return view('user.propertyexplorer')->with('user',$user)->with('property',$data)->with('featuredprop',$featuredprop)->with('city',$city);
 
 }
 public function search(){

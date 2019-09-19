@@ -35,6 +35,15 @@
                         <div class="card">
                             <div class="card-header text-center"><h2>{{ $prop->property_name }}</h2></div>
                             <div class="card-body">
+                                @if($prop->doc_verified == 1)
+                                <div class="verify">
+                                    <h3><i class="fas fa-check-double"></i> Verified property</h3>
+                                </div>
+                                @else
+                                <div class="inverify">
+                                    <h3><i style="color:red" class="far fa-times-circle"></i> Yet To verify</h3>
+                                </div>
+                                @endif
                                 <img width="100%" src="{{ asset('images/'.$prop->featured_img) }}">
                                 <p>{{ $prop->property_state }}</p>
                                 <a href="{{ route('user.property.show',$prop->id) }}" class="btn btn-success">See More</a>

@@ -9,6 +9,7 @@ use Auth;
 use App\Property;
 use App\Agent;
 use Doc;
+use Session;
 
 class VerifyController extends Controller
 {
@@ -21,34 +22,57 @@ class VerifyController extends Controller
         $user = Auth::user();
         $agents = Agent::where('approval',0)->count();
 
-        $property_data = DB::table('properties')->get()->ToArray();
-        
-        $da = 78;
-
-        $property_docs[] = collect(DB::table('doc_property')
-            ->join('properties','properties.id','=','property_id')
-            ->where('property_id',78)
-            ->get());
-        // foreach($property_data as $da){
-
-        // }
-
-        return dd($property_docs);
-        // $property_data = DB::table('doc_property')
-        // ->join('properties','properties.id','=','doc_property.property_id')
-        // ->join('docs','docs.id','=','doc_id')
-        // ->get();
-
-        // ->join('doc_property','doc_property.property_id','=','properties.id')
-        // ->get();
-        
-        // return dd($property_data);
-
+        $property_data = DB::table('properties')->where('doc_verified',0)->paginate(5);
 
         return view('admin.verify',compact('property_data','user','agents'));
     }
 
-    public function verifydoc(request $request){
-        return dd($request);
+    public function verified($id){
+        $user = Auth::user();
+        $agents = Agent::where('approval',0)->count();
+        $query = DB::table('properties')->where('id',$id)->update(['doc_verified'=> 1]);
+
+        $property_data = DB::table('properties')->where('doc_verified',0)->paginate(5);
+        
+        Session::flash('success', 'Verfied successfully');
+        
+        return view('admin.verify',compact('property_data','user','agents'));
+
+        // if($query){
+        //     return view('admin.verify')->with('user',$user)->with('agents',$agents)->with('property_data',$property_data)->with('success','Verfied successfuly');
+        // }else{
+        //     return back()->with('error','Error in verifing');
+        // }
     }
+
+    public function verifydoc($id){
+     $user = Auth::user();
+     $agents = Agent::where('approval',0)->count();
+
+     $doc_data = DB::table('properties')
+     ->join('doc_property','doc_property.property_id','=','properties.id')
+     ->join('docs','docs.id','=','doc_id')
+     ->where('properties.id',$id)
+     ->get();
+
+     return view('admin.propertydoc',compact('user','agents','doc_data'));
+
+ }
+ public function download($filename)
+ {
+    // Check if file exists in public/documents folder
+    $destinationPath = public_path('documents');
+    $file_path =  $destinationPath.'\\'.$filename;
+    $headers = array(
+        'Content-Type: doc',
+        'Content-Disposition: attachment; filename='.$filename,
+    );
+    if ( file_exists( $file_path ) ) {
+            // Send Download
+        return \Response::download( $file_path, $filename, $headers );
+    } else {
+            // Error
+        exit( 'Requested file does not exist on our server!' );
+    }
+}
 }

@@ -120,7 +120,19 @@ Route::namespace('admin')->prefix('admin')->middleware(['auth','auth.admin'])->n
     Route::get('docverify',[
         'as' => 'docverify',
         'uses' => 'VerifyController@index'
+    ]);
+    Route::get('docverify/{id}',[
+        'as' => 'documentverify',
+        'uses' => 'VerifyController@verifydoc'
     ]); 
+    Route::get('download/{filename}',[
+        'as' => 'download',
+        'uses' => 'VerifyController@download'
+    ]);
+    Route::get('verified/{id}',[
+        'as' => 'verified',
+        'uses' => 'VerifyController@verified'
+    ]);
 });
 
 
