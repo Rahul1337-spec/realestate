@@ -56,11 +56,11 @@
                                             <ul class="Filter--control">
                                                 <label class="rounder"><h3>ASSET</h3></label>  
                                                 <li>
-                                                    <input type="checkbox" id="2bhk" name="2 BHK" value="2 BHK">
+                                                    <input type="radio" id="2bhk" name="BHK" value="2 BHK">
                                                     <label for="2bhk"><i class="fas fa-bed"></i> 2 BHK</label>
                                                 </li>
                                                 <li>
-                                                    <input type="checkbox" id="3bhk" name="3 BHK" value="3 BHK">
+                                                    <input type="radio" id="3bhk" name="BHK" value="3 BHK">
                                                     <label for="3bhk"><i class="fas fa-bed"></i> 3 BHK</label>
                                                 </li>
                                             </ul>
@@ -119,9 +119,10 @@
                                 <div class="thumbnail">
                                     <img src="{{ asset('images/'.$properties->featured_img) }}" class="img-responsive" alt="">
 
-                                    <div class="caption">
+                                    <div class="caption p-1">
                                         <h4>{{ $properties->property_name }}</h4>
                                         <h6>{{ $properties->property_type }}</h6>
+                                        <label class="rounder"><h3>{{ $properties->property_state }}</h3></label>
                                         <h5><a href="" class="label label-success">Rs.{{ $properties->property_rate }}</a></h5>
                                         <a href="{{ route('user.property.show',$properties->id) }}" class="btn btn-success">See More</a>
                                         <!--button type="submit" class="btn btn-primary btn-block">ADD TO CART</button-->

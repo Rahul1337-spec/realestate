@@ -76,7 +76,8 @@
                                 <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
                             </form>
                         </li>
-                        @hasrole('user')
+                        {{-- @hasrole('user') --}}
+                        
                         <li class="nav-item">
                             <form method="get" action="{{ route('searchcity') }}">
                                 <select name="select_city" onchange="this.form.submit()" class="form-control">
@@ -87,7 +88,7 @@
                                 </select>
                             </form>    
                         </li>
-                        @endhasrole
+                        {{-- @endhasrole --}}
                        {{--  <li class="nav-item"> 
                             <a href="#" class="dropdown">
                                 <h2 class="menu-title">Select</h2>
@@ -144,37 +145,37 @@
                             @hasrole('agent')
                             @if(Auth::user()->isAgent == 1)
                             <li class="nav-item">
-                             <a class="nav-link" href="{{ route('agent.account') }}">Agent</a>
-                         </li>
-                         @endif
-                         @endhasrole
-                         <li class="nav-item dropdown">
-                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                 {{ Auth::user()->name }} <span class="caret"></span>
-                             </a>
+                               <a class="nav-link" href="{{ route('agent.account') }}">Agent</a>
+                           </li>
+                           @endif
+                           @endhasrole
+                           <li class="nav-item dropdown">
+                               <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                   {{ Auth::user()->name }} <span class="caret"></span>
+                               </a>
 
-                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                 <a class="dropdown-item" href="{{ route('logout') }}"
-                                 onclick="event.preventDefault();
-                                 document.getElementById('logout-form').submit();">
-                                 {{ __('Logout') }}
-                             </a>
+                               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                   <a class="dropdown-item" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
+                                   document.getElementById('logout-form').submit();">
+                                   {{ __('Logout') }}
+                               </a>
 
-                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                 @csrf
-                             </form>
-                         </div>
-                     </li>
-                     @endguest
-                 </ul>
-             </div>
-         </div>
-     </nav>
-     @yield('content')
+                               <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                   @csrf
+                               </form>
+                           </div>
+                       </li>
+                       @endguest
+                   </ul>
+               </div>
+           </div>
+       </nav>
+       @yield('content')
 
-     @include('layouts.footer')
- </div>
- <script type="text/javascript">
+       @include('layouts.footer')
+   </div>
+   <script type="text/javascript">
     jQuery(window).load(function(){
         $('.gallery-responsive').slick({
             dots: true,

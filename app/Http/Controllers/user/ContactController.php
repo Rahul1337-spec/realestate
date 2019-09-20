@@ -51,7 +51,6 @@ class ContactController extends Controller
 
         $data = $request->ToArray();
 
-
         $valid = Validator::make($data,[
             'Name' => ['required','string','max:255'],
             'Email' => ['required','email'],
@@ -93,19 +92,34 @@ class ContactController extends Controller
 
             if($postdata){
                 // Sending mail to property agent 
-               $property_agent = DB::table('properties')
-               ->join('agent_property','agent_property.property_id','=','properties.id')
-               ->join('agent_user','agent_user.agent_id','=','agent_property.agent_id')
-               ->join('users','users.id','=','agent_user.user_id')
-               ->where('properties.id',$request->property_id)
-               ->get();
+             $agent = DB::table('properties')
+             ->join('agent_property','agent_property.property_id','=','properties.id')
+             ->where('properties.id',$request->property_id)
+             ->get();
+             // return dd($agent);
+             if(!$agent->isEmpty()){
+                 $property_agent = DB::table('properties')
+                 ->join('agent_property','agent_property.property_id','=','properties.id')
+                 ->join('agent_user','agent_user.agent_id','=','agent_property.agent_id')
+                 ->join('users','users.id','=','agent_user.user_id')
+                 ->where('properties.id',$request->property_id)
+                 ->get();
+                 return dd($property_agent);
+             }else{
+                $property_agent = DB::table('properties')
+                ->join('property_user','property_user.property_id','=','properties.id')
+                ->join('users','users.id','=','property_user.user_id')
+                ->where('properties.id',$request->property_id)
+                ->get();
+            }
 
-               $enquiry_count = DB::table('enquiry_property')->where('property_id',$request->property_id)->count();
-               $query = DB::table('properties')->where('id',$request->property_id)->update(['enquiry_count'=>$enquiry_count]);
-               
-               $email = $property_agent[0]->email;
 
-               try{
+            $enquiry_count = DB::table('enquiry_property')->where('property_id',$request->property_id)->count();
+            $query = DB::table('properties')->where('id',$request->property_id)->update(['enquiry_count'=>$enquiry_count]);
+
+            $email = $property_agent[0]->email;
+
+            try{
                 \Mail::to($email)->send(new ContactInfoMailable($property_agent));
             }
             catch(\expection $e){

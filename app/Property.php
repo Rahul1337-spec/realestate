@@ -22,6 +22,7 @@ class Property extends Model
         'property_state',
         'property_rate',
         'asset',
+        'uncompress_img',
         'featured_img',
     ];
     // public function __construct(){
@@ -47,6 +48,9 @@ class Property extends Model
     }
     public function document(){
         $this->belongsToMany('App\Doc');
+    }
+    public function userproperty(){
+        return $this->belongsToMany('App\User');
     }
     // public function index(request $request){
     //     $user = Auth::user();

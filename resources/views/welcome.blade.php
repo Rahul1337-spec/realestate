@@ -20,9 +20,9 @@
                 <div class="container py-2">
                     <div class="col-md-12">
                         <div class="gallery front_page portfolio_slider">               
-                            <div class="col-md-4 text-center p-3 text-info"><i class="fas fa-archive"></i> Properties 34+</div>
-                            <div class="col-md-4 text-center p-3 text-info"><i class="fas fa-archive"></i> Rent Properties 21+</div>
-                            <div class="col-md-4 text-center p-3 text-info"><i class="fas fa-archive"></i> Buy Properties 32+</div>
+                            <div class="col-md-4 text-center p-3 text-info"><i class="fas fa-archive"></i> Properties {{ $prop_total }}</div>
+                            <div class="col-md-4 text-center p-3 text-info"><i class="fas fa-archive"></i> Rent Properties {{ $rent }}</div>
+                            <div class="col-md-4 text-center p-3 text-info"><i class="fas fa-archive"></i> Buy Properties {{ $buy }}</div>
                             <div class="col-md-4 text-center p-3 text-info"><i class="fas fa-archive"></i> Registered agents 12+</div>
                         </div>
                     </div>

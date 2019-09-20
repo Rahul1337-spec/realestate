@@ -19,19 +19,20 @@ class AssetsController extends Controller
     }
 
     public function index(){
-     $user = Auth::user();
-     $agents = Agent::where('approval',0)->count();
-     $city = DB::table('cities')->get()->ToArray();
-     $typedata = Asset::all();
+       $user = Auth::user();
+       $agents = Agent::where('approval',0)->count();
+       $city = DB::table('cities')->get()->ToArray();
+       $typedata = Asset::all();
 
-     return view('admin.asset',compact('user','agents','typedata','city'));
- }
+       return view('admin.asset',compact('user','agents','typedata','city'));
+   }
 
- public function assetadd(request $request){
+   public function assetadd(request $request){
 
     $agents = Agent::where('approval',0)->count();
     $data = $request->ToArray();
     $data_type = $request->get('asset');
+    $city = DB::table('cities')->get()->ToArray();
         // $type = Input::get('type');
     $valid = Validator::make($data, [
         'asset' => ['required', 'string', 'max:255'],
@@ -40,27 +41,28 @@ class AssetsController extends Controller
         // return dd($valid);
 
     if($valid->fails()){
-       return back()->withErrors($valid);
-   }
-   else{
+     return back()->withErrors($valid);
+ }
+ else{
     $query = Asset::create([
         'name' => $data_type, 
     ])->save();
     $typedata = Asset::all();
-    return back()->with('message','Added Successfuly')->with('agents',$agents)->with('typedata',$typedata);
+    return back()->with('message','Added Successfuly')->with('agents',$agents)->with('typedata',$typedata)->with('city',$city);
 }
 }
 public function delete($id){
     $query = DB::table('assets')->where('id',$id)->delete();
+    $city = DB::table('cities')->get()->ToArray();
     if($query){
         $agents = Agent::where('approval',0)->count();
         $asset = Asset::all();
-        return back()->with('message','Deleted')->with('agents',$agents)->with('asset',$asset);
+        return back()->with('message','Deleted')->with('agents',$agents)->with('asset',$asset)->with('city',$city);
     }
     else{
         $agents = Agent::where('approval',0)->count();
         $asset = Asset::all();
-        return back()->with('message','Error In Deleting')->with('agents',$agents)->with('asset',$asset);
+        return back()->with('message','Error In Deleting')->with('agents',$agents)->with('asset',$asset)->with('city',$city);
     }
 }
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\agent;
+namespace App\Http\Controllers\user;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Images;
 use App\User;
-use App\Agent;
 use App\Type;
 use App\Property;
 use App\Image;
@@ -24,48 +23,16 @@ use App\Doctype;
 class PropertyController extends Controller
 {
     public function __construct(){
-        $this->middleware('auth.agent');
-    }    
+        $this->middleware('auth');
+    }
     public function index(){
         $user = Auth::user();
         $city = DB::table('cities')->get()->ToArray();
         $userid = $user->id;
-        $agent = User::join('agent_user', function ($join) use ($userid) {
-            $join->on('users.id', '=', 'agent_user.user_id')->where('user_id',$userid);
-        })->get()->pluck('agent_id');  
+        $username = $user->name;
 
-        // foreach($agent as $data){
-        //     $agent_id = $data->request['agent_id'];
-        // }
-        // return dd($agent);
-        if($user->hasAnyRole('agent')){
-            return view('agent.property')->with('user',$user)->with('agentdata',$agent)->with('city',$city);
-        }
-        else{
-            return route('login');
-        }
+        return view('user.upload',compact('userid','city'));
     }
-    
-    // public function PostProperty(Request $request){
-    //     $data = $request::all();
-
-    //     $data = Property::Create([
-    //         $property_name => $request->['property_name'],
-    //         $property_address => $request->['property_address'],
-    //         $property_rate => $request->['property_rate'],
-    //         $property_author => $request->['property_author'],
-    //         $property_type => $request->['property_type'],
-    //         $property_asset => $request->['property_asset']
-    //     ]);
-
-    //     if(!empty($tag)){ 
-    //         $data->attach($tag);
-    //         return $data;
-    //     }
-    //     else{
-    //         return 'Please Select a Tag To add Property';
-    //     }
-    // }
 
     public function PostProperty(request $request){
         // return dd($request);
@@ -107,10 +74,12 @@ class PropertyController extends Controller
                     $type_id = $data->id;
                 }
 
-                $agentdata = DB::table('agents')->where('id',$request->Agent_name)->get();
-                foreach($agentdata as $data){
-                    $agent_id = $data->id;
-                    $agent_name = $data->agent_name;
+                /*Need Modification*/ 
+                $userdata = DB::table('users')->where('id',$request->userid)->get();
+                // return dd($userdata);
+                foreach($userdata as $data){
+                    $user_id = $data->id;
+                    $user_name = $data->name;
                 }
                 /*Fetching the image*/ 
                 $featured_image = $request->featured; 
@@ -216,7 +185,7 @@ class PropertyController extends Controller
                     'property_name' => $request->property_name,
                     'property_address' => $request->property_address,
                     'property_type' => $request->property_type,
-                    'property_author' => $agent_name,
+                    'property_author' => $user_name,
                     'property_country' => $request->country,
                     'property_state' => $request->state,
                     'property_rate' => $request->property_rate,
@@ -225,7 +194,7 @@ class PropertyController extends Controller
                     'featured_img' => $name,
                 ]);
 
-                $postdata->agents()->attach($agent_id);
+                $postdata->userproperty()->attach($user_id);
                 $postdata->type()->attach($type_id);
                 $postdata->cities()->attach($state_id);
                 $postdata->asset()->attach($asset_id);
@@ -263,90 +232,92 @@ class PropertyController extends Controller
                 endif;
 
                 /*------------Finding the Buy and Rent Types to add up for agent---------------*/
-                $type_check = $request->type;
+                // $type_check = $request->type;
                 
-                $properties_type = DB::table('agent_property')->where('agent_id',$agent_id)->get();
-                $prop_check = DB::table('types')->where('name',$type_check)->get();
+                // $properties_type = DB::table('agent_property')->where('agent_id',$agent_id)->get();
+                // $prop_check = DB::table('types')->where('name',$type_check)->get();
 
 
-                foreach($properties_type as $prop){
-                    $data = DB::table('property_type')->where('property_id',$prop->property_id)->get();
-                }
-                $for_rent = '';
-                $for_buy = '';
+                // foreach($properties_type as $prop){
+                //     $data = DB::table('property_type')->where('property_id',$prop->property_id)->get();
+                // }
+                // $for_rent = '';
+                // $for_buy = '';
 
-                foreach($data as $data1){
-                    if($prop_check[0]->id == '3'){
-                        $for_rent = DB::table('property_type')->where('type_id',3)->count();
-                    }elseif($prop_check[0]->id == '4'){
-                        $for_buy = DB::table('property_type')->where('type_id',4)->count();
-                    }
-                    else{}
-                }
-            
-            /*------------------------------------------------------------------------------*/ 
+                // foreach($data as $data1){
+                //     if($prop_check[0]->id == '3'){
+                //         $for_rent = DB::table('property_type')->where('type_id',3)->count();
+                //     }elseif($prop_check[0]->id == '4'){
+                //         $for_buy = DB::table('property_type')->where('type_id',4)->count();
+                //     }
+                //     else{}
+                // }
 
-            $property_id = DB::table('properties')->where('id',$postdata->id)->get()->ToArray();
-            /*adding property counts to agents table*/
-            $count_data = DB::table('agents')->where('id',$agent_id)->get();
-            $count = DB::table('agent_property')->where('agent_id',$agent_id)->count();
+                /*------------------------------------------------------------------------------*/ 
 
-            $query = DB::table('agents')->where('id',$agent_id)->update(['property_counts'=>$count]);
-            if(!$for_rent == ''){
-                $query = DB::table('agents')->where('id',$agent_id)->update(['for_rent'=>$for_rent]);
-            }
-            elseif(!$for_buy == ''){
-                $query = DB::table('agents')->where('id',$agent_id)->update(['for_buy'=>$for_buy]);
-            }else{}
-            /*--------------------------------------*/ 
+                $property_id = DB::table('properties')->where('id',$postdata->id)->get()->ToArray();
+                /*adding property counts to agents table*/
+                $count_data = DB::table('users')->where('id',$user_id)->get();
+
+                $count = DB::table('property_user')->where('user_id',$user_id)->count();
+
+                $query = DB::table('users')->where('id',$user_id)->update(['property_count'=>$count]);
+                if($count_data[0]->hasproperty == 0):
+                    $query = DB::table('users')->where('id',$user_id)->update(['hasproperty'=>1]);
+                endif;
+                /* Functionality only for the agents */ 
+                // if(!$for_rent == ''){
+                //     $query = DB::table('agents')->where('id',$agent_id)->update(['for_rent'=>$for_rent]);
+                // }
+                // elseif(!$for_buy == ''){
+                //     $query = DB::table('agents')->where('id',$agent_id)->update(['for_buy'=>$for_buy]);
+                // }else{}
+                /*------------------------------------*/ 
                 // return dd($property_id);
-            if($property_id){
-                foreach($property_id as $data){
-                    $prop = $data->id;
-                }
-                    // $image = $request->file('image');
-                foreach($request->file('image') as $images){
-                    $image = $images;
-                    // return dd($image);
-                    $name = $image->getClientOriginalName();
-                    // return dd($name);
-                    $actual_name = pathinfo($name,PATHINFO_FILENAME);
-                    $original_name = $actual_name;
-                    $extension = pathinfo($name, PATHINFO_EXTENSION);
-                    // return dd($actual_name);
-                    $i = 1;
-                    while(file_exists('images/'.$actual_name.".".$extension))
-                    {           
-                        $actual_name = (string)$original_name.$i;
-                        $name = $actual_name.".".$extension;
-                        $i++;
+                if($property_id){
+                    foreach($property_id as $data){
+                        $prop = $data->id;
                     }
-                    $destinationPath = public_path('images');
+                    // $image = $request->file('image');
+                    foreach($request->file('image') as $images){
+                        $image = $images;
+                    // return dd($image);
+                        $name = $image->getClientOriginalName();
+                    // return dd($name);
+                        $actual_name = pathinfo($name,PATHINFO_FILENAME);
+                        $original_name = $actual_name;
+                        $extension = pathinfo($name, PATHINFO_EXTENSION);
+                    // return dd($actual_name);
+                        $i = 1;
+                        while(file_exists('images/'.$actual_name.".".$extension))
+                        {           
+                            $actual_name = (string)$original_name.$i;
+                            $name = $actual_name.".".$extension;
+                            $i++;
+                        }
+                        $destinationPath = public_path('images');
                     // return dd($destinationPath);
-                    $image->move($destinationPath, $name)->getRealPath();
-                    $path = $destinationPath.'\\'.$name;
+                        $image->move($destinationPath, $name)->getRealPath();
+                        $path = $destinationPath.'\\'.$name;
 
-                    $property_image = Image::create([
-                        'filename' => $name,
-                        'path' => $path
-                    ]);
-                    $property_image->propertyimage()->attach($prop);
-                }    
-                return back()->with('message','Upload Successful');
-            }
-            else{
-                return back()->with('error','error while storing');
-            }
+                        $property_image = Image::create([
+                            'filename' => $name,
+                            'path' => $path
+                        ]);
+                        $property_image->propertyimage()->attach($prop);
+                    }    
+                    return back()->with('message','Upload Successful');
+                }
+                else{
+                    return back()->with('error','error while storing');
+                }
                 // return dd($prop);
-        }
-        else{ 
-            return back()->withErrors($valid);
-        }
-    }else{
-       return back()->with('error','please upload property image');
+            }
+            else{ 
+                return back()->withErrors($valid);
+            }
+        }else{
+           return back()->with('error','please upload property image');
+       }
    }
-}
-Public function PublicFeed(Request $request){
-
-}
 }

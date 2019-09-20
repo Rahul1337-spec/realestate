@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddDocumentPathToProperties extends Migration
+class AddPropertyCountToUsers extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class AddDocumentPathToProperties extends Migration
      */
     public function up()
     {
-        Schema::table('properties', function (Blueprint $table) {
-            //
+        Schema::table('users', function (Blueprint $table) {
+            $table->integer('property_count')->default(0)->nullable();
         });
     }
 
@@ -25,8 +25,8 @@ class AddDocumentPathToProperties extends Migration
      */
     public function down()
     {
-        Schema::table('properties', function (Blueprint $table) {
-            //
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('property_count');
         });
     }
 }

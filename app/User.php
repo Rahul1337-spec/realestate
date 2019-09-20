@@ -55,4 +55,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function enquiryuser(){
         $this->belongsToMany('App\Enquiry');
     }
+    public function property(){
+        $this->belongsToMany('App\Property');
+    }
 }

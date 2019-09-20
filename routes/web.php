@@ -15,7 +15,7 @@ Route::get('/',[
     'as' => '/',
     'uses' => 'HomeController@callback'
 ]);
-Route::get('searchcity',[
+Route::get('search/city/',[
     'as' => 'searchcity',
     'uses' => 'HomeController@searchcity'
 ]);
@@ -73,31 +73,31 @@ Route::namespace('admin')->prefix('admin')->middleware(['auth','auth.admin'])->n
         'as' => 'search',
         'uses' => 'AgentController@searchar'
     ]);
-    Route::get('/manageproperty',[
+    Route::get('/manage/property',[
         'as' => 'property',
         'uses' => 'AdminController@manageproperty'
     ]);
-    Route::get('/searchprop',[
+    Route::get('/search/prop',[
         'as' => 'searchprop',
         'uses' => 'AdminController@searchprop'
     ]);
-    Route::get('/citymanage',[
+    Route::get('/city/manage',[
         'as' => 'citymanage',
         'uses' => 'CityController@index'
     ]);
-    Route::post('/cityadd',[
+    Route::post('/city/add',[
         'as' => 'cityadd',
         'uses' => 'CityController@cityadd'
     ]);
-    Route::get('delete/{id}',[
+    Route::get('city/delete/{id}',[
         'as' => 'deletecity',
         'uses' => 'CityController@delete'
     ]);
-    Route::get('/assetmanage',[
+    Route::get('/asset/manage',[
         'as' => 'assetmanage',
         'uses' => 'AssetsController@index'
     ]);
-    Route::post('/assetadd',[
+    Route::post('/asset/add',[
         'as' => 'assetadd',
         'uses' => 'AssetsController@assetadd'
     ]);
@@ -105,7 +105,7 @@ Route::namespace('admin')->prefix('admin')->middleware(['auth','auth.admin'])->n
         'as' => 'deleteasset',
         'uses' => 'AssetsController@delete'
     ]);
-    Route::get('Documentmanage',[
+    Route::get('Document/manage',[
         'as' => 'documentmanage',
         'uses' => 'DocumentController@index'
     ]);
@@ -137,7 +137,7 @@ Route::namespace('admin')->prefix('admin')->middleware(['auth','auth.admin'])->n
 
 
 /*---------------------------------------------------------*/ 
-/*-------------User Authentication area-------------------*/
+/*--------------User Authentication area-------------------*/
 /*---------------------------------------------------------*/ 
 Route::namespace('user')->prefix('user')->middleware(['auth','auth.user'])->name('user')->group(function(){
     Route::get('property',[
@@ -156,7 +156,7 @@ Route::namespace('user')->prefix('user')->middleware(['auth','auth.user'])->name
         'as' => '.form.save',
         'uses' => 'form\FormController@ContactSaveData'
     ]);
-    Route::get('/AgentRegisteration',[
+    Route::get('/Agent/Registeration',[
         'as' => '.agent',
         'uses' => 'AgentController@regpage'
     ]);
@@ -168,7 +168,7 @@ Route::namespace('user')->prefix('user')->middleware(['auth','auth.user'])->name
         'as' => '.property.show',
         'uses' => 'UserPropertyController@propertyshow'
     ]);
-    Route::get('propertypage',[
+    Route::get('explore/property',[
         'as' => '.properties',
         'uses' => 'UserController@propertypage'
     ]);
@@ -176,11 +176,11 @@ Route::namespace('user')->prefix('user')->middleware(['auth','auth.user'])->name
         'as' => '.search',
         'uses' => 'UserController@search'
     ]);
-    Route::get('agentexplorer',[
+    Route::get('agent/explorer',[
         'as' => '.allagents',
         'uses' => 'UserController@agentlist'
     ]);
-    Route::get('contactproperty/{id}',[
+    Route::get('contact/property/{id}',[
         'as' => '.contactprop',
         'uses' => 'ContactController@index'
     ]);
@@ -188,9 +188,29 @@ Route::namespace('user')->prefix('user')->middleware(['auth','auth.user'])->name
         'as' => '.contactinfo',
         'uses' => 'ContactController@contactdata'
     ]);
-    Route::get('propertysearch',[
+    Route::get('property/search',[
         'as' => '.propertysearch',
         'uses' => 'UserController@propertysearch'
+    ]);
+    Route::get('upload',[
+        'as' => '.upload.property',
+        'uses' => 'PropertyController@index'
+    ]);
+    Route::post('property/post',[
+        'as' => '.property.post',
+        'uses' => 'PropertyController@PostProperty'
+    ]);
+    Route::get('manage/property',[
+        'as' => '.manage',
+        'uses' => 'ManageController@manage'
+    ]);
+    Route::get('clients/{id}',[
+        'as' => '.clients',
+        'uses' => 'ManageController@clients'
+    ]);
+    Route::get('delete/{id}',[
+        'as' => '.delete',
+        'uses' => 'ManageController@delete'
     ]);
 });
 

@@ -62,7 +62,9 @@ class HomeController extends Controller
             return view('home')->with('user',$user)->with('agentdata',$agentdata)->with('agents',$agents)->with('revoke',$revoke)->with('property',$property)->with('property_count',$property_count)->with('for_rent',$for_rent)->with('for_buy',$for_buy)->with('property_slide',$property_slide)->with('city',$city)->with('verify',$verified_count);
         }
         else{
+            // $arr_ip = geoip()->getLocation($_SERVER['REMOTE_ADDR'])->ToArray();
             $arr_ip = geoip()->getLocation('203.187.238.129')->ToArray();
+
             $location_var = $arr_ip['city'];
 
             $city = DB::table('cities')->get()->ToArray();
@@ -76,8 +78,20 @@ class HomeController extends Controller
                 ->join('properties','properties.id','=','property_id')
                 ->where('cities.id',$city_id)
                 ->paginate(6);
+
+                $property_rent = DB::table('cities')
+                ->join('city_property','city_property.city_id','=','cities.id')
+                ->join('properties','properties.id','=','property_id')
+                ->join('property_type','property_type.property_id','=','properties.id')
+                ->where('cities.id',$city_id)
+                ->get();
+
+                $propertier_rent = $property_rent->where('type_id',4)->count();
+                $propertier_buy = $property_rent->where('type_id',3)->count();
                 
-                return view('welcome')->with('property',$property)->with('city',$city);    
+                $property_total = $property->count();
+
+                return view('welcome')->with('property',$property)->with('city',$city)->with('rent',$propertier_rent)->with('buy',$propertier_buy)->with('prop_total',$property_total);    
             }
             
         }
@@ -97,7 +111,19 @@ class HomeController extends Controller
         ->where('cities.id',$city_id)
         ->paginate(6);
 
-        return view('welcome')->with('property',$property)->with('city',$city);    
+        $property_rent = DB::table('cities')
+        ->join('city_property','city_property.city_id','=','cities.id')
+        ->join('properties','properties.id','=','property_id')
+        ->join('property_type','property_type.property_id','=','properties.id')
+        ->where('cities.id',$city_id)
+        ->get();
+
+        $propertier_rent = $property_rent->where('type_id',4)->count();
+        $propertier_buy = $property_rent->where('type_id',3)->count();
+
+        $property_total = $property->count();
+
+        return view('welcome')->with('property',$property)->with('city',$city)->with('rent',$propertier_rent)->with('buy',$propertier_buy)->with('prop_total',$property_total);    
         
     }
 }

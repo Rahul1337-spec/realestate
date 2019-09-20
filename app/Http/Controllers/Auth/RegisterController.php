@@ -65,7 +65,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        $arr_ip = geoip()->getLocation('67.205.146.29')->ToArray();
+        $arr_ip = geoip()->getLocation($_SERVER['REMOTE_ADDR'])->ToArray();
         $location_code = $arr_ip['iso_code'];
 
         $UserRole = Role::where('name','user')->first();

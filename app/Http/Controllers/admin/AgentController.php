@@ -70,10 +70,10 @@ class AgentController extends Controller
             $datasend = DB::table('agent_user')->where('agent_id',$id)->get()->ToArray();
 
             foreach($datasend as $datas){
-             $user_id = $datas->user_id;
-         }
-         $string = DB::table('users')->where('id',$user_id)->get()->ToArray();
-         foreach($string as $strings){
+               $user_id = $datas->user_id;
+           }
+           $string = DB::table('users')->where('id',$user_id)->get()->ToArray();
+           foreach($string as $strings){
             $email = $strings->email; 
         }
         try{

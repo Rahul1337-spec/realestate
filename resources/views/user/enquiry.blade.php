@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <div class="container-fluid">
-    <img class="img-thumbnail contact__image" src="{{ asset('images/'.$property[0]->featured_img) }}">
+    <img class="img-thumbnail contact__image" src="{{ asset('images/'.$property[0]->uncompress_img) }}">
 </div>
 <div class="container">
     <div class="row py-3">

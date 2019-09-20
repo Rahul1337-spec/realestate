@@ -19,31 +19,34 @@ class TypeController extends Controller
     public function index(){
         $user = Auth::user();
         $agents = Agent::where('approval',0)->count();
+        $city = DB::table('cities')->get()->ToArray();
         $typedata = Type::all();
 
-        return view('admin.type')->with('user',$user)->with('agents',$agents)->with('typedata',$typedata);
+        return view('admin.type')->with('user',$user)->with('agents',$agents)->with('typedata',$typedata)->with('city',$city);
     }
 
     public function typeinsert(request $request){
-     $agents = Agent::where('approval',0)->count();
-     $data = $request->ToArray();
-     $data_type = $request->get('type');
+       $agents = Agent::where('approval',0)->count();
+       $data = $request->ToArray();
+       $data_type = $request->get('type');
+
         // $type = Input::get('type');
-     $valid = Validator::make($data, [
+       $valid = Validator::make($data, [
         'type' => ['required', 'string', 'max:255'],
     ]);
         // return back()->with('message','validated');
         // return dd($valid);
 
-     if($valid->fails()){
-         return back()->withErrors($valid);
-     }
-     else{
+       if($valid->fails()){
+           return back()->withErrors($valid);
+       }
+       else{
         $query = Type::create([
             'name' => $data_type, 
         ])->save();
         $typedata = Type::all();
-        return back()->with('message','Added Successfuly')->with('agents',$agents)->with('typedata',$typedata);
+        $city = DB::table('cities')->get()->ToArray();
+        return back()->with('message','Added Successfuly')->with('agents',$agents)->with('typedata',$typedata)->with('city',$city);
     }
 
 }
@@ -52,12 +55,14 @@ public function delete($id){
     if($query){
         $agents = Agent::where('approval',0)->count();
         $typedata = Type::all();
-        return back()->with('message','Deleted')->with('agents',$agents)->with('typedata',$typedata);
+        $city = DB::table('cities')->get()->ToArray();
+        return back()->with('message','Deleted')->with('agents',$agents)->with('typedata',$typedata)->with('city',$city);
     }
     else{
         $agents = Agent::where('approval',0)->count();
         $typedata = Type::all();
-        return back()->with('message','Error In Deleting')->with('agents',$agents)->with('typedata',$typedata);
+        $city = DB::table('cities')->get()->ToArray();
+        return back()->with('message','Error In Deleting')->with('agents',$agents)->with('typedata',$typedata)->with('city',$city);
     }
 }
 }

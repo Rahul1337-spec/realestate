@@ -21,13 +21,16 @@ class DocumentController extends Controller
         $user = Auth::user();
         $agents = Agent::where('approval',0)->count();
         $typedata = Doctype::all();
-        return view('admin.document',compact('user','agents','typedata'));
+        $city = DB::table('cities')->get()->ToArray();
+
+        return view('admin.document',compact('user','agents','typedata','city'));
     }
 
     public function addtype(request $request){
         $agents = Agent::where('approval',0)->count();
         $data = $request->ToArray();
         $doc_type = $request->get('docstype');
+        $city = DB::table('cities')->get()->ToArray();
         // $type = Input::get('type');
         $valid = Validator::make($data, [
             'docstype' => ['required', 'string', 'max:255'],
@@ -44,7 +47,7 @@ class DocumentController extends Controller
         ])->save();
         $typedata = Doctype::all();
         
-        return back()->with('message','Added Successfuly')->with('agents',$agents)->with('typedata',$typedata);
+        return back()->with('message','Added Successfuly')->with('agents',$agents)->with('typedata',$typedata)->with('city',$city);
     }
 }
 
@@ -53,12 +56,14 @@ public function delete($id){
     if($query){
         $agents = Agent::where('approval',0)->count();
         $typedata = Doctype::all();
-        return back()->with('message','Deleted')->with('agents',$agents)->with('typedata',$typedata);
+        $city = DB::table('cities')->get()->ToArray();
+        return back()->with('message','Deleted')->with('agents',$agents)->with('typedata',$typedata)->with('city',$city);
     }
     else{
         $agents = Agent::where('approval',0)->count();
         $typedata = Doctype::all();
-        return back()->with('message','Error In Deleting')->with('agents',$agents)->with('typedata',$typedata);
+        $city = DB::table('cities')->get()->ToArray();
+        return back()->with('message','Error In Deleting')->with('agents',$agents)->with('typedata',$typedata)->with('city',$city);
     }
 }
 }

@@ -314,45 +314,38 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-sm-12">
-               <a href="{{ route('user.agent') }}">
+                <a href="{{ route('user.upload.property') }}">
+                    <div class="card-header text-center">
+                        <h2>Post your property</h2>
+                        <div class="card-body">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                            tempor incididunt ut labore et dolore magna aliqua. 
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 col-sm-12">
+                <a href="{{ route('user.manage') }}">
+                    <div class="card-header text-center">
+                        <h2>Manage Property</h2>
+                        <div class="card-body">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                            tempor incididunt ut labore et dolore magna aliqua.
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 col-sm-12">
                 <div class="card-header text-center">
-                    <h2>Apply For agent</h2>
+                    <h2>Rent Property</h2>
                     <div class="card-body">
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                        cillum dolore eu fugiat nulla pariatur.
+                        tempor incididunt ut labore et dolore magna aliqua.
                     </div>
-                </div>
-            </a>
-        </div>
-        <div class="col-md-4 col-sm-12">
-            <div class="card-header text-center">
-                <h2>Buy Property</h2>
-                <div class="card-body">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur.
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 col-sm-12">
-            <div class="card-header text-center">
-                <h2>Rent Property</h2>
-                <div class="card-body">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur.
                 </div>
             </div>
         </div>
     </div>
-</div>
 </section>
 <section class="section__1 py-5">
     <div class="container">
@@ -372,6 +365,7 @@
                 </div>
                 @endforeach
             </div>
+            {{ $property->links() }}
         </div>
     </div>
 </section>
