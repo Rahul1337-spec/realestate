@@ -70,25 +70,25 @@ class ContactController extends Controller
             $postdata->property_enquiry()->attach($request->property_id);
             $postdata->save();
 
-        //     $phoneno = $postdata->phone;
-        //     $data = [
-        //         'phone' => '91'.$phoneno, // Receivers phone
-        //         'body' => 'Thank you for using our service, Your request has been forwarded to respected property owner', // Message
-        //     ];
-        //     $json = json_encode($data); // Encode data to JSON
-        //     // URL for request POST /message
-        //     $url = 'https://eu68.chat-api.com/instance64993/sendMessage?token=tfdzfg3cvw5nqk2h';
+            $phoneno = $postdata->phone;
+            $data = [
+                'phone' => '91'.$phoneno, // Receivers phone
+                'body' => 'Thank you for using our service, Your request has been forwarded to respected property owner', // Message
+            ];
+            $json = json_encode($data); // Encode data to JSON
+            // URL for request POST /message
+            $url = 'https://eu64.chat-api.com/instance67188/sendMessage?token=834ge52oeiyd6t46';
 
-        //     // Make a POST request
+            // Make a POST request
 
-        //     $options = stream_context_create(['http' => [
-        //         'method'  => 'POST',
-        //         'header'  => 'Content-type: application/json',
-        //         'content' => $json
-        //     ]
-        // ]);
+            $options = stream_context_create(['http' => [
+                'method'  => 'POST',
+                'header'  => 'Content-type: application/json',
+                'content' => $json
+            ]
+        ]);
             // Send a request
-            // $result = file_get_contents($url, false, $options);
+            $result = file_get_contents($url, false, $options);
 
             if($postdata){
                 // Sending mail to property agent 
@@ -104,7 +104,7 @@ class ContactController extends Controller
                  ->join('users','users.id','=','agent_user.user_id')
                  ->where('properties.id',$request->property_id)
                  ->get();
-                 return dd($property_agent);
+                 
              }else{
                 $property_agent = DB::table('properties')
                 ->join('property_user','property_user.property_id','=','properties.id')

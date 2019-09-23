@@ -76,7 +76,7 @@
                                                 <td>{{ $data->id }}</td>
                                                 <td>{{ $data->name }}</td>
                                                 <td ><a href="#" class="btn btn-primary">Edit</a>
-                                                    <a href="{{ route('admin.delete',$data->id) }}" class="btn btn-danger">Delete</a>
+                                                    <a href="{{ route('admin.deletetype',$data->id) }}" class="btn btn-danger">Delete</a>
                                                 </td>
                                             </tr>
                                             @endforeach

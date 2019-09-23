@@ -65,8 +65,8 @@ Route::namespace('admin')->prefix('admin')->middleware(['auth','auth.admin'])->n
         'as' => 'type',
         'uses' => 'TypeController@index'
     ]);
-    Route::get('delete/{id}',[
-        'as' => 'delete',
+    Route::get('type/delete/{id}',[
+        'as' => 'deletetype',
         'uses' => 'TypeController@delete'
     ]);
     Route::get('/search',[
@@ -156,7 +156,7 @@ Route::namespace('user')->prefix('user')->middleware(['auth','auth.user'])->name
         'as' => '.form.save',
         'uses' => 'form\FormController@ContactSaveData'
     ]);
-    Route::get('/Agent/Registeration',[
+    Route::get('Agent/Registeration',[
         'as' => '.agent',
         'uses' => 'AgentController@regpage'
     ]);
@@ -188,7 +188,7 @@ Route::namespace('user')->prefix('user')->middleware(['auth','auth.user'])->name
         'as' => '.contactinfo',
         'uses' => 'ContactController@contactdata'
     ]);
-    Route::get('property/search',[
+    Route::get('search/property',[
         'as' => '.propertysearch',
         'uses' => 'UserController@propertysearch'
     ]);
