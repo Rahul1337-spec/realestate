@@ -23,27 +23,29 @@ class TestController extends Controller
 
     public function testdata(request $request){
         // return dd($request);
-        if($request->hasFile('document1')):
-            $doc1 = Input::file('document1')->getClientOriginalName();
-            echo "$doc1";
-        endif;
-        if($request->hasFile('doucment2')):
-            $doc2 = Input::file('document2')->getClientOriginalName();
-        endif;
-        if(isset($doc1)):
-            echo "First file found";
-        endif;
-        if(isset($doc2)):
-            echo "Second file found";
-        endif;
-        if(!isset($doc2)):
-            echo "Second not found";
-        endif;
+        $state = explode($request->states);
         return dd($request);
+        // if($request->hasFile('document1')):
+        //     $doc1 = Input::file('document1')->getClientOriginalName();
+        //     echo "$doc1";
+        // endif;
+        // if($request->hasFile('doucment2')):
+        //     $doc2 = Input::file('document2')->getClientOriginalName();
+        // endif;
+        // if(isset($doc1)):
+        //     echo "First file found";
+        // endif;
+        // if(isset($doc2)):
+        //     echo "Second file found";
+        // endif;
+        // if(!isset($doc2)):
+        //     echo "Second not found";
+        // endif;
+        // return dd($request);
     }
 
     public function index(){
-        return view('testpage');
+        // return view('testpage');
         // $arr_ip = geoip()->getLocation('203.187.238.129');
         // return dd($arr_ip);
         // $property_id = 2;
@@ -365,6 +367,22 @@ class TestController extends Controller
         /*--------------Contact agent for property-----------------*/ 
 
         /*------------------------------------------------------------------------------------------------------*/ 
+        /*----Edit and update logic for property-----*/
+        // $property_id = 92;
+        // $user_id = 13;
+        // $type_data = Type::all()->ToArray();
+
+        // $data = DB::table('properties')
+        // ->join('property_user','property_user.property_id','=','properties.id')
+        // ->join('image_property','image_property.property_id','=','properties.id')
+        // ->join('property_type','property_type.property_id','=','properties.id')
+        // ->join('types','types.id','=','type_id')
+        // ->join('images','images.id','=','image_id')
+        // ->where('properties.id',$property_id)
+        // ->get();
+
+        // return view('testpage',compact('data','type_data'));
+        // return dd($data); 
     }
     /*----------------------------------------------*/
 

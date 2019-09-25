@@ -46,7 +46,7 @@ class UserController extends Controller
         return view('user.propertyexplorer')->with('user',$user)->with('property',$property)->with('featuredprop',$featuredprop)->with('city',$city);
     }
     
-    public function propertysearch(){
+    public function propertysearch(request $request){
         $user = Auth::user();
 
         $city = DB::table('cities')->get()->ToArray();
@@ -69,10 +69,16 @@ class UserController extends Controller
         // return dd($bhk_3);
         // $search = $property->where('property_rate','<','6000');
         // return dd($search);
+        // if($request->has('city')):
+        //     $property->where('property_state','=',$input['city']);
+        // endif;
+    //     if($request->has('min_price') && $request->has('max_price')):
+    //         $property->whereBetween('property_rate',[$request->min_price,$request->max_price]);
+    // endif;
+
         if(isset($input['city'])):
             $search = $property->where('property_state', '=', $input['city']);
         endif;
-
         if(isset($min) && isset($max)):
            $max = $input['max_price'];
        $min = $input['min_price'];       

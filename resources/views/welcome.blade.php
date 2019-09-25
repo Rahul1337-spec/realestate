@@ -8,16 +8,6 @@
             <div class="round">
                 <h2>Real Estate</h2>
             </div>
-            {{-- <div class="carousel">
-                <div class="carousel-item">
-                    <div class="carousel-inner"></div>
-                    <div class="carousel-indicators"></div>
-                </div>
-                <div class="carousel-item">
-                    <div class="carousel-inner"></div>
-                    <div class="carousel-indicators"></div>
-                </div>
-            </div> --}}
         </div>
     </div>
 

@@ -23,7 +23,8 @@
 
     <!-- Slider dependencies -->
     <script type="text/javascript" src="{{ asset('slick/slick.min.js') }}"></script>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js" integrity="sha256-d/edyIFneUo3SvmaFnf96hRcVBcyaOy96iMkPez1kaU=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" integrity="sha256-FdatTf20PQr/rWg+cAKfl6j4/IY3oohFAJ7gVC3M34E=" crossorigin="anonymous" />
     {{-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script> --}}
     <!-- Include the plugin's CSS and JS: -->
     {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -79,7 +80,7 @@
                         {{-- @hasrole('user') --}}
                         <li class="nav-item">
                             <form method="get" action="{{ route('searchcity') }}">
-                                <select name="select_city" onchange="this.form.submit()" class="form-control">
+                                <select name="select_city" onchange="this.form.submit()" class="selector form-control">
                                     <option value="">Select City</option>
                                     @foreach($city as $da)
                                     <option value="{{ $da->id }}">{{ $da->name }}</option>
@@ -87,6 +88,7 @@
                                 </select>
                             </form>    
                         </li>
+                        
                         {{-- @endhasrole --}}
                        {{--  <li class="nav-item"> 
                             <a href="#" class="dropdown">
@@ -144,37 +146,37 @@
                             @hasrole('agent')
                             @if(Auth::user()->isAgent == 1)
                             <li class="nav-item">
-                             <a class="nav-link" href="{{ route('agent.account') }}">Agent</a>
-                         </li>
-                         @endif
-                         @endhasrole
-                         <li class="nav-item dropdown">
-                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                 {{ Auth::user()->name }} <span class="caret"></span>
-                             </a>
+                               <a class="nav-link" href="{{ route('agent.account') }}">Agent</a>
+                           </li>
+                           @endif
+                           @endhasrole
+                           <li class="nav-item dropdown">
+                               <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                   {{ Auth::user()->name }} <span class="caret"></span>
+                               </a>
 
-                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                 <a class="dropdown-item" href="{{ route('logout') }}"
-                                 onclick="event.preventDefault();
-                                 document.getElementById('logout-form').submit();">
-                                 {{ __('Logout') }}
-                             </a>
+                               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                   <a class="dropdown-item" href="{{ route('logout') }}"
+                                   onclick="event.preventDefault();
+                                   document.getElementById('logout-form').submit();">
+                                   {{ __('Logout') }}
+                               </a>
 
-                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                 @csrf
-                             </form>
-                         </div>
-                     </li>
-                     @endguest
-                 </ul>
-             </div>
-         </div>
-     </nav>
-     @yield('content')
+                               <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                   @csrf
+                               </form>
+                           </div>
+                       </li>
+                       @endguest
+                   </ul>
+               </div>
+           </div>
+       </nav>
+       @yield('content')
 
-     @include('layouts.footer')
- </div>
- <script type="text/javascript">
+       @include('layouts.footer')
+   </div>
+   <script type="text/javascript">
     jQuery(window).load(function(){
         $('.gallery-responsive').slick({
             dots: true,

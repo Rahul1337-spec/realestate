@@ -1,3 +1,5 @@
+{{-- {{ dd($type_data) }} --}}
+{{-- {{ dd($data) }} --}}
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,7 +16,8 @@
 
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/js/select2.min.js" integrity="sha256-d/edyIFneUo3SvmaFnf96hRcVBcyaOy96iMkPez1kaU=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.10/css/select2.min.css" integrity="sha256-FdatTf20PQr/rWg+cAKfl6j4/IY3oohFAJ7gVC3M34E=" crossorigin="anonymous" />
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-lightbox/0.7.0/bootstrap-lightbox.min.js"></script>
     
     <link rel="stylesheet" type="text/css" href="{{ asset('slick/slick.css') }}"/>
@@ -57,19 +60,30 @@
                     <form method="post" action="{{ route('testpage.data') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="input-group control-group increment">
-                            <input type="file" name="document1" class="form-control">
-                            <input type="file" name="document2" class="form-control">
-                            <div class="input-group-btn"> 
-                                <button type="submit" class="btn btn-success" type="button"><i class="glyphicon glyphicon-plus"></i>Add</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+                            {{-- <input type="text" name="name" value="{{ $data[0]->property_name }}">
+                            <textarea name="address">{{ $data[0]->property_address }}</textarea>
+                            <select name="type">
+                                <option value="">{{ $data[0]->name }}</option>
+                                @foreach($type_data as $da)
+                                <option value="{{ $da['name'] }}">{{ $da['name'] }}</option>
+                                @endforeach
+                            </select> --}}
 
-    <script type="text/javascript">
+
+                            <select class="js-example-basic-multiple" name="states[]" multiple="multiple">
+                              <option value="AL">Alabama</option>
+                              <option value="WY">Wyoming</option>
+                          </select>
+
+                          <button type="submit" class="btn btn-success" type="button"><i class="glyphicon glyphicon-plus"></i>Add</button>
+                      </div>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <script type="text/javascript">
   //   jQuery('.list-group-item a').mouseover(function(e){
   //       e.preventDefault();
   //       jQuery('img.img-box ').attr('src',$(this).attr("href"));
@@ -90,7 +104,10 @@
           $(this).parents(".control-group").remove();
       });
   });
-
+  $(document).ready(function() {
+    $('.js-example-basic-multiple').select2();
+});
+  
 </script>
 </body>
 </html>
