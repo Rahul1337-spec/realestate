@@ -2,26 +2,25 @@
 /*Stay at bottom damnit*/
 html,
 body {
-   margin:0;
-   padding:0;
-   height:100%;
-
+ margin:0;
+ padding:0;
+ height:100%;
+ font-family:fantasy;
 }
 #app {
-   min-height:100%;
-   position:relative;
-   padding-bottom:260px;   /* Height of the footer */
-   overflow:hidden;
+ min-height:100%;
+ position:relative;
+ padding-bottom:260px;   /* Height of the footer */
+ overflow:hidden;
 }
-
 footer {
-   position:absolute;
-   bottom:0;
-   width:100%;
-   height:260px;   /* Height of the footer */
-   background:black;
-   color:white;
-   padding:20px 0px;
+ position:absolute;
+ bottom:0;
+ width:100%;
+ height:260px;   /* Height of the footer */
+ background:black;
+ color:white;
+ padding:20px 0px;
 }
 
 /*----------------------------*/
@@ -74,6 +73,16 @@ a{
 .container-fluid{
     padding:0;
 }
+.full__height{
+    height:100%;
+}
+.custom--title {
+    text-align:center;
+}
+.custom--title h3{
+    font-size:16px;
+    letter-spacing:2px;
+}
 /*----------------------------------------------*/
 /*---------------Welcome section----------------*/
 /*----------------------------------------------*/
@@ -105,13 +114,6 @@ a{
     text-transform:uppercase;
     font-family:fantasy;
     letter-spacing:2px;
-}
-#page-id-1 .row--3{
-    background-image:url('http://realeastate.devs/storage/1/5days.jpg');
-    background-color:#1977d778;
-    background-blend-mode:overlay;
-    background-repeat:no-repeat;
-    background-size:cover;
 }
 #page-id-1 .desc{
     font-size:24px;
@@ -164,9 +166,6 @@ img:hover {
   opacity: 0.9;
 }
 .contact-wrap {
-    position:absolute;
-    right:10%;
-    bottom:20%;
     box-shadow:0px 0px 22px -7px;
 }
 .contact-wrap:before{
@@ -180,6 +179,61 @@ img:hover {
 .desc {
     background-color:#ffffff21;
     box-shadow:0px 0px 8px -4px;
+}
+.custom__container {
+    box-sizing:border-box;
+    box-shadow:0px 0px 2px 2px #b0b0b078;
+}
+.custom__container--img{
+    box-shadow:0px 0px 2px 3px #21a6bb42;
+}
+.custom__container--img img{    
+    height:200px;
+}
+.custom__container--content {
+    padding:4px;
+}
+.custom--content .row:nth-child(1){
+    padding:5px 2px;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    border-bottom:1px solid #c7c7c7;
+}
+.custom--content .col-md-4{
+    padding:2px
+}
+.custom--content .col-md-12{
+    padding:5px;
+}
+.custom--content p{
+    margin:0;
+}
+.custom--slant {
+    width:100%;
+    padding:10%;
+    display:flex;
+    flex-direction:column;
+    place-content:center;
+    place-items:center;
+    text-align: center;
+    background-image:url('http://realeastate.devs/storage/1/banner.jpg');
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+    background-color:#0000009e;
+    background-blend-mode:overlay;
+    clip-path: polygon(0 19%, 100% 0, 100% 81%, 0 100%);
+}
+.custom--header {
+    width:100%;
+    height:80px;
+}
+.custom--footer {
+    width:100%;
+    height:80px;
+}
+.custom--slant--content {
+    font-size:36px;
+    color:white;
+    font-weight:bold;
 }
 /*----------------------------------------------*/
 /*---------Agent Registeration section----------*/
@@ -224,8 +278,26 @@ main#page-1102 .form-group input{
 /*Property contact area*/
 .contact__image{
     width:100%;
-    height:50vh;
+    height:70vh;
 }
+.property__content {
+    position:absolute;
+    width: 100%;
+    bottom: 0;
+    color:white;
+    padding:20px;
+    filter: drop-shadow(2px 4px 6px black);
+}
+
+.property__content .col-md-6:nth-child(1) {
+    display:flex;
+    justify-content:center;
+}
+.property__content .col-md-6:nth-child(2) {
+    display:flex;
+    justify-content:center;
+}
+
 /*---------------------------------*/
 /*------Footer Section code--------*/
 /*---------------------------------*/
@@ -416,7 +488,9 @@ main#page-1102 .form-group input{
 }
 ul.Filter--control {
     list-style: none;
-    padding:0;
+    /*padding:0;*/
+    margin-bottom:0;
+    padding:5px 0px;
 }
 ul.Filter--control li {
     display: inline-block;
@@ -434,8 +508,79 @@ ul.Filter--control li label {
     letter-spacing:1px;
     border-radius:25px;
     cursor: pointer;
+    margin-bottom:0;
 }
 ul.Filter--control input:checked + label {
     background: red;
     color:white;
 }
+/*------------------------------------*/
+/*----------Home page slider----------*/
+/*------------------------------------*/
+.custom-slider{
+    height:70vh;
+}
+.custom-slider .inner{
+    height:inherit;
+}
+.custom-silder .inner img{
+    position:absolute;
+    object-fit:cover;
+}
+.inner{
+    /*height:70vh;*/
+    position:relative;
+}
+.inner .feature-content {
+    width:20%;
+    position:absolute;
+    top:5%;
+    right:20%;
+    padding:10px;
+}
+.inner .feature-content:after {
+    content:'Featured';
+    color:black;
+    position:absolute;
+    top:0;
+    font-weight:bold;
+    clip-path: polygon(0 0, 100% 0, 80% 100%, 0% 100%);
+    background-color:#f6c803;
+    padding:2px 20px 2px 8px;
+}
+.card-body img {
+    width:100%;
+    height:200px;
+}
+.row.more-options {
+    display:none;
+    /*transition:linear 0.1s;*/
+    background-color: #0093ff;
+}
+.option{
+    background-color:#d1d1d1cf;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    place-content: center;
+    place-items: center;
+}
+.option:hover{
+    cursor:pointer;
+    transition:linear 0.2s;
+    transform:scale(1.1);
+}
+.row.full__height .col-md-6 {
+    padding:0;
+}
+.milkat--multifilter{
+    background-color: #d5d5d569;
+    box-shadow: 0px 0px 2px 2px #41414130;
+}
+.gallery.centerede .inner{
+    overflow:hidden;
+}
+
+/*---------------------------*/
+/*--------Slick Edits--------*/
+/*---------------------------*/

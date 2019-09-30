@@ -57,25 +57,40 @@
                                         </div>
                                         <div class="col-md-12">
                                             {{-- <div class="card"> --}}
-                                                <div class="card-header"><h3 class="text-info">PROPERTY TYPE</h3></div>
-                                                <div class="card-body">
-                                                    <div class="col-md-12 col-sm-12">
-                                                        <div class="form-group">
-                                                            <ul class="Filter--control">
-                                                                <li>
-                                                                    <input id="OLD" class="btn" type="radio" name="property_type" value="old">
-                                                                    <label for="OLD"><i class="fas fa-person-booth"></i> OLD</label>
-                                                                </li>
-                                                                <li>
-                                                                    <input id="NEW" class="btn" type="radio" name="property_type" value="Buy">
-                                                                    <label for="NEW"><i class="fas fa-home"></i> NEW</label>
-                                                                </li>
-                                                            </ul>
-                                                            @error('property_type')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                            @enderror
+                                                <div class="row">
+                                                    <div class="col-md-6 col-sm-6">
+                                                        <div class="card-header"><h3 class="text-info">PROPERTY TYPE</h3></div>
+                                                        <div class="card-body">
+                                                            <div class="form-group">
+                                                                <ul class="Filter--control">
+                                                                    <li>
+                                                                        <input id="OLD" class="btn" type="radio" name="property_type" value="old">
+                                                                        <label for="OLD"><i class="fas fa-person-booth"></i> OLD</label>
+                                                                    </li>
+                                                                    <li>
+                                                                        <input id="NEW" class="btn" type="radio" name="property_type" value="Buy">
+                                                                        <label for="NEW"><i class="fas fa-home"></i> NEW</label>
+                                                                    </li>
+                                                                </ul>
+                                                                @error('property_type')
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
+                                                                @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="card-header"><h3 class="text-info">Lot Size</h3></div>
+                                                        <div class="card-body">
+                                                            <div class="form-group">
+                                                                <input type="text" name="sqft" class="form-control @error('sqft') is-invalid @enderror " placeholder="sq ft" required autocomplete="sqft" autofocus>
+                                                                @error('sqft')
+                                                                <span class="invalid-feedback" role="alert">
+                                                                    <strong>{{ $message }}</strong>
+                                                                </span>
+                                                                @enderror
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -131,6 +146,7 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <input type="hidden" class="form-control" value="{{ $agentdata[0] }}" name="Agent_name" placeholder="Agent Name">
                                 <div class="col-md-12">
                                     <div class="card-header"><h3 class="text-info">PROPERTY FOR</h3></div>
                                     <select class="form-control @error('type') is-invalid @enderror" name="type">
@@ -179,19 +195,19 @@
                                 <div class="col-md-12">
                                     <div class="row">
                                         <div class="col-md-6">
-                                         <div class="card-header"><h3 class="text-info">DOCUMENT 1</h3></div>
-                                         <input type="file" name="document1">
-                                         @error('document1')
-                                         <span class="invalid-feedback">
+                                           <div class="card-header"><h3 class="text-info">DOCUMENT 1</h3></div>
+                                           <input type="file" name="document1">
+                                           @error('document1')
+                                           <span class="invalid-feedback">
                                             <strong>{{ $message }}</strong>
                                         </span>
                                         @enderror
                                     </div>
                                     <div class="col-md-6">
-                                     <div class="card-header"><h3 class="text-info">DOCUMENT 2</h3></div>
-                                     <input type="file" name="document2">
-                                     @error('document2')
-                                     <span class="invalid-feedback">
+                                       <div class="card-header"><h3 class="text-info">DOCUMENT 2</h3></div>
+                                       <input type="file" name="document2">
+                                       @error('document2')
+                                       <span class="invalid-feedback">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror

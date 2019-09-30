@@ -35,6 +35,7 @@
     
     <link rel="stylesheet" type="text/css" href="{{ asset('slick/slick.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ asset('slick/slick-theme.css') }}"/>
+    <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.1.266/build/pdf.min.js"></script>
 
     
     {{-- <script src="{{ asset('js/custom.js') }}"></script> --}}
@@ -215,6 +216,14 @@
     // instead of a settings object
     ]
 });
+        $('.custom-slider').slick({
+            dots: false,
+            autoplay:true,
+            infinite: true,
+            arrow:true,
+            speed: 500,
+        });
+        
         $('.front_page').slick({
             dots: false,
             autoplay:true,
@@ -252,8 +261,41 @@
     // instead of a settings object
     ]
 });
+        $(".option").click(function(){
+            $(".more-options").slideToggle("slow")
+        });
 
         @yield('script')
+
+        $('.centerer').slick({
+          centerMode: true,
+          centerPadding: '0px',
+          autoplay:'true',
+          dots:'true',
+          speed:300,
+          slidesToShow: 3,
+          responsive: [
+          {
+              breakpoint: 768,
+              settings: {
+                arrows: false,
+                centerMode: true,
+                centerPadding: '40px',
+                slidesToShow: 3
+            }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            arrows: false,
+            centerMode: true,
+            centerPadding: '40px',
+            slidesToShow: 1
+        }
+    }
+    ]
+});
+
     });
 </script>
 <script type="text/javascript">
@@ -265,6 +307,32 @@
         elems[i].addEventListener('click', confirmIt, false);
     }
 </script>
+
+{{-- $('.zoom-gallery').magnificPopup({
+delegate: 'a',
+type: 'image',
+closeOnContentClick: false,
+closeBtnInside: false,
+mainClass: 'mfp-with-zoom mfp-img-mobile',
+image: {
+verticalFit: true,
+titleSrc: function(item) {
+return item.el.attr('title') + ' &middot; <a class="image-source-link" href="'+item.el.attr('data-source')+'" target="_blank">image source</a>';
+}
+},
+gallery: {
+enabled: true
+},
+zoom: {
+enabled: true,
+duration: 300, // don't foget to change the duration also in CSS
+opener: function(element) {
+return element.find('img');
+}
+}
+
+}); 
+--}}
 
 </body>
 </html>

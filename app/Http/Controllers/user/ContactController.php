@@ -14,6 +14,7 @@ use Auth;
 use App\Property;
 use App\User;
 use App\Enquiry;
+use App\Image;
 
 class ContactController extends Controller
 {
@@ -27,8 +28,18 @@ class ContactController extends Controller
         $city = DB::table('cities')->get()->ToArray();
         $emptyvar = '';
         /*---- Fetch full data with join--------*/ 
-        $property_data = DB::table('properties')->where('id',$property_id)->get();
-        
+        $property_data = DB::table('properties')
+        ->where('properties.id',$property_id)
+        ->get();
+
+        $property_image = DB::table('properties')
+        ->join('image_property','image_property.property_id','=','properties.id')
+        ->join('images','images.id','=','image_id')
+        ->where('properties.id',$property_id)
+        ->get();
+
+        // return dd($property_image);
+
         $enquiry_check = DB::table('enquiry_user')
         ->join('users','users.id','=','enquiry_user.user_id')
         ->join('enquiry_property','enquiry_property.enquiry_id','=','enquiry_user.enquiry_id')
@@ -36,7 +47,7 @@ class ContactController extends Controller
         ->where('property_id',$property_id)
         ->get();
         
-        return view('user.enquiry')->with('user',$user)->with('property',$property_data)->with('check',$enquiry_check)->with('city',$city);
+        return view('user.enquiry')->with('user',$user)->with('property',$property_data)->with('check',$enquiry_check)->with('city',$city)->with('property_image',$property_image);
 
         // if(!$enquiry_check == ''){
         //       return dd($enquiry_check);
@@ -104,7 +115,7 @@ class ContactController extends Controller
                  ->join('users','users.id','=','agent_user.user_id')
                  ->where('properties.id',$request->property_id)
                  ->get();
-                 
+
              }else{
                 $property_agent = DB::table('properties')
                 ->join('property_user','property_user.property_id','=','properties.id')

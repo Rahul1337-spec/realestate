@@ -21,6 +21,7 @@ class UserController extends Controller
     }
 
     public function index(){
+
         $user = Auth::user();
         $city = DB::table('cities')->get()->ToArray();
         if($user->hasAnyRole('user')){
@@ -60,12 +61,12 @@ class UserController extends Controller
         }
 
         $city = DB::table('cities')->get()->ToArray();
+
         $property = collect(DB::table('properties')
             ->join('property_type','property_type.property_id','=','properties.id')
             ->where('properties.property_state',$input['city'])
             ->get());
-        
-        
+        // return dd($property);
         // return dd($bhk_3);
         // $search = $property->where('property_rate','<','6000');
         // return dd($search);
@@ -80,11 +81,11 @@ class UserController extends Controller
             $search = $property->where('property_state', '=', $input['city']);
         endif;
         if(isset($min) && isset($max)):
-           $max = $input['max_price'];
-       $min = $input['min_price'];       
-       $search = $property->whereBetween('property_rate',[$min,$max]);   
-   endif;
-   if(isset($type_id)):
+         $max = $input['max_price'];
+     $min = $input['min_price'];       
+     $search = $property->whereBetween('property_rate',[$min,$max]);   
+ endif;
+ if(isset($type_id)):
     $search = $property->where('type_id','=',$type_id);
 endif;
 if(isset($input['BHK'])):
@@ -102,12 +103,12 @@ $data = $search->paginate(10);
 return view('user.propertyexplorer')->with('user',$user)->with('property',$data)->with('featuredprop',$featuredprop)->with('city',$city);
 }
 public function search(){
-   $data = Input::get('q');
-   $user = Auth::user();
-   $city = DB::table('cities')->get()->ToArray();
-   $featuredprop = DB::table('properties')->paginate(2);
-   $property = Property::where('property_name','LIKE','%'.$data.'%')->orWhere('property_type','LIKE','%'.$data.'%')->orWhere('property_state','LIKE','%'.$data.'%')->paginate(10);
-   return view('user.propertyexplorer')->with('user',$user)->with('property',$property)->with('featuredprop',$featuredprop)->with('city',$city);
+ $data = Input::get('q');
+ $user = Auth::user();
+ $city = DB::table('cities')->get()->ToArray();
+ $featuredprop = DB::table('properties')->paginate(2);
+ $property = Property::where('property_name','LIKE','%'.$data.'%')->orWhere('property_type','LIKE','%'.$data.'%')->orWhere('property_state','LIKE','%'.$data.'%')->paginate(10);
+ return view('user.propertyexplorer')->with('user',$user)->with('property',$property)->with('featuredprop',$featuredprop)->with('city',$city);
 }
 }
 

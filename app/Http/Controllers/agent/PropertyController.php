@@ -82,6 +82,7 @@ class PropertyController extends Controller
                 'country' => ['required'],
                 'state' => ['required'],
                 'type' => ['required'],
+                'sqft' => ['required','integer'],
                 'asset' => ['required'],
                 'featured' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
                 'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -221,6 +222,7 @@ class PropertyController extends Controller
                     'property_state' => $request->state,
                     'property_rate' => $request->property_rate,
                     'asset' => $request->asset,
+                    'sqft' => $request->sqft,
                     'uncompress_img' => $nameer,
                     'featured_img' => $name,
                 ]);

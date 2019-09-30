@@ -19,4 +19,8 @@ class Image extends Model
     public function propertyimage(){
        return $this->belongsToMany('App\Property');
    }
+//    public function selproperty()
+//    {
+//     return $this->hasMany('App\Property');
+// }   
 }

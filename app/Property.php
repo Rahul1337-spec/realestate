@@ -22,6 +22,7 @@ class Property extends Model
         'property_state',
         'property_rate',
         'asset',
+        'sqft',
         'uncompress_img',
         'featured_img',
     ];
@@ -31,6 +32,9 @@ class Property extends Model
     public function images(){
         return $this->hasMany('App\Image');
     }
+    // public function allimg(){
+    //     return $this->belongsTo('App\Image');
+    // }
     public function agents(){
         return $this->belongsToMany('App\Agent');
     }

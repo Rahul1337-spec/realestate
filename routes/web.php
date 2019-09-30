@@ -180,7 +180,7 @@ Route::namespace('user')->prefix('user')->middleware(['auth','auth.user'])->name
         'as' => '.allagents',
         'uses' => 'UserController@agentlist'
     ]);
-    Route::get('contact/property/{id}',[
+    Route::get('/contact-property/{id}',[
         'as' => '.contactprop',
         'uses' => 'ContactController@index'
     ]);
@@ -246,7 +246,17 @@ Route::namespace('agent')->prefix('agent')->middleware(['auth','auth.agent'])->n
     ]);
 });
 
-
+/*---------------------------------------------------------*/ 
+/*--------------------Guest API area-----------------------*/
+/*---------------------------------------------------------*/ 
+Route::get('guest/property',[
+    'as' => 'guest.property',
+    'uses' => 'GuestPropertyController@index'
+]);
+Route::post('guest/search',[
+    'as' => 'guest.search',
+    'uses' => 'GuestPropertyController@guestsearch'
+]);
 /*---------------------------------------------------------*/ 
 /*--------------Test Authentication area-------------------*/
 /*---------------------------------------------------------*/ 

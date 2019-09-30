@@ -68,13 +68,13 @@
                                 <option value="{{ $da['name'] }}">{{ $da['name'] }}</option>
                                 @endforeach
                             </select> --}}
-
-
-                            <select class="js-example-basic-multiple" name="states[]" multiple="multiple">
+                            <input type="file" name="upload">
+                            <input type="file" name="doc">
+                           {{--  <select class="js-example-basic-multiple" name="states[]" multiple="multiple">
                               <option value="AL">Alabama</option>
                               <option value="WY">Wyoming</option>
                           </select>
-
+                          --}}
                           <button type="submit" class="btn btn-success" type="button"><i class="glyphicon glyphicon-plus"></i>Add</button>
                       </div>
                   </form>

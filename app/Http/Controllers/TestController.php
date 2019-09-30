@@ -8,8 +8,10 @@ use App\Mail\AgentConfirmMailable;
 use App\Mail\ContactInfoMailable;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\File;
+use App\Http\Controllers\DateTime;
 use Mail;
 use Auth;
+use Carbon\Carbon;
 use App\User;
 use App\Role;
 use App\Agent;
@@ -20,11 +22,33 @@ use App\Type;
 
 class TestController extends Controller
 {
-
     public function testdata(request $request){
+        $upload = $request->file('upload');
+        $upload2 = $request->file('doc');
+        $data2 = $upload->getClientMimeType();
+        $data = $upload2->getClientMimeType();
+
+        // $data = $upload2->getMimeType();
+        // return dd($data);
+        // return dd($upload2);
+        // return dd($upload);
+
+        // if(substr($upload->getMimeType(), 0, 5) == 'image') {
+        //     return "Image file found";
+        // }
+        
+        if(substr($upload2->getClientMimeType(), 0, 5) == 'application') {
+            return "doc file found";
+        }
+
+        // if($data == 'docx'){
+        //     return "Doc file found";
+        // }
+
         // return dd($request);
-        $state = explode($request->states);
         return dd($request);
+        $state = explode($request->states);
+        // return dd($request);
         // if($request->hasFile('document1')):
         //     $doc1 = Input::file('document1')->getClientOriginalName();
         //     echo "$doc1";
@@ -45,7 +69,11 @@ class TestController extends Controller
     }
 
     public function index(){
-        // return view('testpage');
+        /* working human readable date conversion */ 
+        return Carbon::parse($property_date[0]->created_at)->diffForHumans();
+        return dd($property_date);
+        /*--------------------------------------------*/ 
+        return view('testpage');
         // $arr_ip = geoip()->getLocation('203.187.238.129');
         // return dd($arr_ip);
         // $property_id = 2;
