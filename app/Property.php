@@ -47,6 +47,9 @@ class Property extends Model
     public function asset(){
         return $this->belongsToMany('App\Asset');
     }
+    public function payuid(){
+        $this->belongsToMany('\vendor\tzsk\payu\src\Model\PayuPayment');
+    }
     public function enquireprop(){
         $this->belongsToMany('App\Enquiry');
     }

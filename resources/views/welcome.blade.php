@@ -242,15 +242,23 @@
         <div class="container-fluid section--5">
             <div class="row row--5">
                 <div class="container d-flex justify-content-center">
-                    <div class="custom--title">
-                        <h3>RENT</h3>
-                        <h2>Properties for Rent At {{ $prop_rent[0]->name }}</h2>
+                    <div class="row">
+                        @if($prop_rent->isNotEmpty())
+                        <div class="col-md-12 custom--title">
+                            <h3>RENT</h3>
+                            <h2>Properties for Rent At {{ $prop_rent[0]->name }}</h2>
+                        </div>
+                        @endif
+                        @if($prop_rent->isEmpty())
+                        <div class="col-md-12 custom--title">
+                            <h3>RENT</h3>
+                            <h2>Properties for Rent At {{ $property_null[0]->name }}</h2>
+                        </div>
+                        <div class="col-md-12 d-flex justify-content-center">
+                            <h2>No Property Found</h2>
+                        </div>
+                        @endif
                     </div>
-                    @if($prop_rent->isEmpty())
-                    <div class="col-md-12 d-flex justify-content-center">
-                        <h2>No Property Found</h2>
-                    </div>
-                    @endif
                 </div>
                 <div class="container">
                     <div class="col-md-12">

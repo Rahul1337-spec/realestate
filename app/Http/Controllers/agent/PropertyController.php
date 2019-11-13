@@ -345,8 +345,8 @@ class PropertyController extends Controller
             return back()->withErrors($valid);
         }
     }else{
-       return back()->with('error','please upload property image');
-   }
+     return back()->with('error','please upload property image');
+ }
 }
 Public function PublicFeed(Request $request){
 

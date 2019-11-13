@@ -88,6 +88,7 @@ class HomeController extends Controller
 
             if($location_var == 'Vadodara'){
                 $data = DB::table('cities')->where('name','Vadodara')->get()->ToArray();
+                
                 $city_id = $data[0]->id;
                 
                 $property = DB::table('cities')
@@ -108,15 +109,21 @@ class HomeController extends Controller
                 ->get();
 
                 $propertier_rent = $property_rent->where('type_id',4)->count();
-                
                 $propertier_buy = $property_rent->where('type_id',3)->count();
                 
                 $prop_rent = $property_rent->where('type_id',4);
                 $prop_buy = $property_rent->where('type_id',3);
+                // return dd($prop_rent);
 
                 $property_total = $property->count();
 
-                return view('welcome')->with('property',$property)->with('city',$city)->with('rent',$propertier_rent)->with('buy',$propertier_buy)->with('prop_total',$property_total)->with('prop_rent',$prop_rent)->with('prop_buy',$prop_buy);    
+                // return view('welcome')->with('property',$property)->with('city',$city)->with('rent',$propertier_rent)->with('buy',$propertier_buy)->with('prop_total',$property_total)->with('prop_rent',$prop_rent)->with('prop_buy',$prop_buy);
+                if($property->isEmpty()):
+                    $property_null = DB::table('cities')->where('name',$location_var)->get();
+                    return view('welcome')->with('property',$property)->with('city',$city)->with('rent',$propertier_rent)->with('buy',$propertier_buy)->with('prop_total',$property_total)->with('property_null',$property_null)->with('prop_rent',$prop_rent)->with('prop_buy',$prop_buy);
+                endif;
+                $property_null=NULL;
+                return view('welcome')->with('property',$property)->with('city',$city)->with('rent',$propertier_rent)->with('buy',$propertier_buy)->with('prop_total',$property_total)->with('property_null',$property_null)->with('prop_rent',$prop_rent)->with('prop_buy',$prop_buy);    
             }
             
         }

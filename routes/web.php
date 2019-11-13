@@ -23,6 +23,13 @@ Auth::routes();
 Auth::routes(['verify' => true]);
 
 // Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['middleware' => 'web'], function(){
+    Route::get('paymentform',['as'=>'paymentform', 'uses' => 'PaymentController@data']);
+    # Call Route
+    Route::get('payment', ['as' => 'payment', 'uses' => 'PaymentController@payment']);
+# Status Route
+    Route::get('payment/status', ['as' => 'payment.status', 'uses' => 'PaymentController@status']);
+});
 
 /*---------------------------------------------------------*/ 
 /*------------------File Management area-------------------*/
@@ -200,6 +207,15 @@ Route::namespace('user')->prefix('user')->middleware(['auth','auth.user'])->name
         'as' => '.property.post',
         'uses' => 'PropertyController@PostProperty'
     ]);
+    Route::post('Pay/Property',[
+        'as' => 'payment',
+        'uses' => 'PaymentController@payment'
+    ]);
+    Route::get('Success/{data}',[
+        'as' => 'payment.status', 
+        'uses' => 'PaymentController@status'
+    ]);
+
     Route::get('manage/property',[
         'as' => '.manage',
         'uses' => 'ManageController@manage'
@@ -212,6 +228,7 @@ Route::namespace('user')->prefix('user')->middleware(['auth','auth.user'])->name
         'as' => '.delete',
         'uses' => 'ManageController@delete'
     ]);
+
 });
 
 
@@ -243,6 +260,15 @@ Route::namespace('agent')->prefix('agent')->middleware(['auth','auth.agent'])->n
     Route::get('clients/{id}',[
         'as' => 'clients',
         'uses' => 'AgentController@clients'
+    ]);
+
+    Route::post('Pay/Property',[
+        'as' => 'payment',
+        'uses' => 'PaymentController@payment'
+    ]);
+    Route::get('Status/{data}',[
+        'as' => 'payment.status', 
+        'uses' => 'PaymentController@status'
     ]);
 });
 
